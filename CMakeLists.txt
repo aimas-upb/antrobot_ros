@@ -163,6 +163,7 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
    src/antrobot_ros/antrobot_node.py
+   src/antrobot_ros/antrobot_key_teleop_node.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

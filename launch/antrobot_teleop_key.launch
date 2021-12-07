@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="antrobot_ros" type="antrobot_node.py" name="antrobot"/>
+    <node pkg="antrobot_ros" type="antrobot_key_teleop_node.py" name="antrobot_teleop" output="screen"/>
+</launch>
