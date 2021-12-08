@@ -1,0 +1,10 @@
+<launch>
+    <!--  TODO: Add server parameters as they are implemented in antrobot_node.py  -->
+    <node pkg="antrobot_ros" type="antrobot_node.py" name="antrobot"/>
+
+    <!--  Antrobot uses the RPLiDAR A1/A2 by default. The package for RPLiDAR can be cloned
+          form https://github.com/Slamtec/rplidar_ros.
+          If another LiDAR is used, change the configuration below accordingly.
+    -->
+    <include file="$(find rplidar_ros)/launch/rplidar.launch" />
+</launch>
