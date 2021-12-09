@@ -15,10 +15,6 @@ else:
     import tty
     import termios
 
-# e = """
-# Communications Failed
-# """
-
 
 # TODO: Make this a singleton
 class KeyboardTeleoperation:
@@ -62,8 +58,8 @@ class KeyboardTeleoperation:
         self.max_angular_velocity = max_angular_velocity
         self.linear_step_size = linear_step_size
         self.angular_step_size = angular_step_size
-        self.current_linear_velocity = 0
-        self.current_angular_velocity = 0
+        self.target_linear_velocity = 0
+        self.target_angular_velocity = 0
 
     @classmethod
     def __cmd_step__(cls, output, target, slope):
@@ -104,14 +100,14 @@ class KeyboardTeleoperation:
 
     def __velocities_string__(self):
         return "currently:\tlinear velocity %s\t angular velocity %s " % \
-               (self.current_linear_velocity, self.current_angular_velocity)
+               (self.target_linear_velocity, self.target_angular_velocity)
 
     def __set_ref_linear_velocity__(self, target_velocity):
-        self.current_linear_velocity = KeyboardTeleoperation.__threshold__(
+        self.target_linear_velocity = KeyboardTeleoperation.__threshold__(
             target_velocity, -self.max_linear_velocity, self.max_linear_velocity)
 
     def __set_ref_angular_velocity__(self, target_velocity):
-        self.current_angular_velocity = KeyboardTeleoperation.__threshold__(
+        self.target_angular_velocity = KeyboardTeleoperation.__threshold__(
             target_velocity, -self.max_angular_velocity, self.max_angular_velocity)
 
     def run(self):
@@ -127,20 +123,20 @@ class KeyboardTeleoperation:
             while not rospy.is_shutdown():
                 key_press = KeyboardTeleoperation.__get_key__()
                 if key_press in self.key_mapping['forward']:
-                    self.__set_ref_linear_velocity__(self.current_linear_velocity + self.linear_step_size)
+                    self.__set_ref_linear_velocity__(self.target_linear_velocity + self.linear_step_size)
                     print(self.__velocities_string__())
                 elif key_press in self.key_mapping['backward']:
-                    self.__set_ref_linear_velocity__(self.current_linear_velocity - self.linear_step_size)
+                    self.__set_ref_linear_velocity__(self.target_linear_velocity - self.linear_step_size)
                     print(self.__velocities_string__())
                 elif key_press in self.key_mapping['left']:
-                    self.__set_ref_angular_velocity__(self.current_angular_velocity + self.angular_step_size)
+                    self.__set_ref_angular_velocity__(self.target_angular_velocity + self.angular_step_size)
                     print(self.__velocities_string__())
                 elif key_press in self.key_mapping['right']:
-                    self.__set_ref_angular_velocity__(self.current_angular_velocity - self.angular_step_size)
+                    self.__set_ref_angular_velocity__(self.target_angular_velocity - self.angular_step_size)
                     print(self.__velocities_string__())
                 elif key_press in self.key_mapping['stop']:
-                    self.current_linear_velocity = 0
-                    self.current_angular_velocity = 0
+                    self.target_linear_velocity = 0
+                    self.target_angular_velocity = 0
                     linear_velocity_ctrl = 0
                     angular_velocity_ctrl = 0
                     print(self.__velocities_string__())
@@ -148,11 +144,11 @@ class KeyboardTeleoperation:
                     break
 
                 linear_velocity_ctrl = self.__cmd_step__(
-                    linear_velocity_ctrl, self.current_linear_velocity, self.linear_step_size/2.0
+                    linear_velocity_ctrl, self.target_linear_velocity, self.linear_step_size / 2.0
                 )
 
                 angular_velocity_ctrl = self.__cmd_step__(
-                    angular_velocity_ctrl, self.current_angular_velocity, self.angular_step_size/2.0
+                    angular_velocity_ctrl, self.target_angular_velocity, self.angular_step_size / 2.0
                 )
 
                 cmd_vel_msg.linear.x = linear_velocity_ctrl
