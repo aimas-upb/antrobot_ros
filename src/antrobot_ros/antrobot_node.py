@@ -29,6 +29,7 @@ class AntRobotNode:
         if not ok:
             rospy.logerr("Failed to initialize rdrive!")
             raise RuntimeError("RDrive enabled failed.")
+        self.drive.move(0, 0)
 
         # Subscribe to cmd_vel messages
         rospy.Subscriber(self.cmd_vel_topic, Twist, self.__cmd_vel_callback__)

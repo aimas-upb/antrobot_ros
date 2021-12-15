@@ -23,7 +23,7 @@ class KeyboardTeleoperation:
             max_linear_velocity: float = 0.5,
             max_angular_velocity: float = 6.0,
             linear_step_size: float = 0.025,
-            angular_step_size: float = 0.3
+            angular_step_size: float = 0.2
     ):
         self.key_mapping = key_mapping
         if key_mapping is None:
