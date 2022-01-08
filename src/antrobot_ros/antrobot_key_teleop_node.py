@@ -22,8 +22,8 @@ class KeyboardTeleoperation:
             self, key_mapping: dict = None,
             max_linear_velocity: float = 0.5,
             max_angular_velocity: float = 6.0,
-            linear_step_size: float = 0.025,
-            angular_step_size: float = 0.2
+            linear_step_size: float = 0.05,
+            angular_step_size: float = 0.5
     ):
         self.key_mapping = key_mapping
         if key_mapping is None:
@@ -58,8 +58,8 @@ class KeyboardTeleoperation:
         self.max_angular_velocity = max_angular_velocity
         self.linear_step_size = linear_step_size
         self.angular_step_size = angular_step_size
-        self.target_linear_velocity = 0
-        self.target_angular_velocity = 0
+        self.target_linear_velocity = 0.0
+        self.target_angular_velocity = 0.0
 
     @classmethod
     def __cmd_step__(cls, output, target, slope):
