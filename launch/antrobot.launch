@@ -8,5 +8,5 @@
           If the RPLidar is used uncomment include below.
           If another LiDAR is used, change the configuration accordingly.
     -->
-<!--    <include file="$(find rplidar_ros)/launch/rplidar.launch" />-->
+    <include file="$(find rplidar_ros)/launch/rplidar.launch" />
 </launch>

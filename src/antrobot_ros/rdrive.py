@@ -7,12 +7,16 @@ import struct
 
 
 class RDrive:
-    __COM_EN_DIS = 0
-    __COM_MOVE = 1
+    __ENC_CPR_REG = 13
+    __DD_EN_DIS = 15
+    __DD_WHEEL_SEPARATION = 16
+    __DD_WHEEL_RADIUS = 17
+    __DD_PID_GAINS = 20
+    __DD_VEL_CMD = 21
 
     def __init__(
-            self, pose=None, wheel_diameter=0.04, wheel_separation=0.135,
-            has_encoder=True, encoder_resolution=1800,
+            self, pose=None, wheel_diameter=0.06, wheel_separation=0.1685,
+            has_encoder=True, encoder_resolution=1600,
             i2c_port=1, i2c_addr=0x70
     ):
         # Set 2D robot pose
@@ -25,7 +29,7 @@ class RDrive:
         self.i2c_addr = i2c_addr
 
         # Set drive mechanical parameters
-        self.wheel_diameter = wheel_diameter
+        self.wheel_radius = wheel_diameter/2.0
         self.wheel_separation = wheel_separation
 
         # Set drive sensors parameters
@@ -40,7 +44,7 @@ class RDrive:
     def enable(self):
         with SMBus(self.i2c_port) as bus:
             try:
-                bus.write_i2c_block_data(self.i2c_addr, self.__COM_EN_DIS, [1])
+                bus.write_i2c_block_data(self.i2c_addr, self.__DD_EN_DIS, [1])
                 self.drive_enable = True
             except IOError:
                 print("enable(): IOError in i2c write.")
@@ -50,18 +54,54 @@ class RDrive:
     def disable(self):
         with SMBus(self.i2c_port) as bus:
             try:
-                bus.write_i2c_block_data(self.i2c_addr, self.__COM_EN_DIS, [0])
+                bus.write_i2c_block_data(self.i2c_addr, self.__DD_EN_DIS, [0])
                 self.drive_enable = False
             except IOError:
                 print("disable(): IOError in i2c write.")
         return not self.drive_enable
 
-    def move(self, v, omega):
+    def cmd_vel(self, v, omega):
         msg = [byte for data_item in [v, omega] for byte in struct.pack('<f', data_item)]
         with SMBus(self.i2c_port) as bus:
             try:
-                bus.write_i2c_block_data(self.i2c_addr, self.__COM_MOVE, msg)
-                self.linear_velocity = v
-                self.angular_velocity = omega
+                bus.write_i2c_block_data(self.i2c_addr, self.__DD_VEL_CMD, msg)
             except IOError:
-                print("move(): IOError in i2c write.")
+                print("cmd_vel(): IOError in i2c write.")
+            self.linear_velocity = v
+            self.angular_velocity = omega
+
+    def set_wheel_radius(self, wheel_radius):
+        msg = [byte for byte in struct.pack('<f', wheel_radius)]
+        with SMBus(self.i2c_port) as bus:
+            try:
+                bus.write_i2c_block_data(self.i2c_addr, self.__DD_WHEEL_RADIUS, msg)
+            except IOError:
+                print("set_wheel_radius(): IOError in i2c write.")
+        self.wheel_radius = wheel_radius
+
+    def set_wheel_separation(self, wheel_separation):
+        msg = [byte for byte in struct.pack('<f', wheel_separation)]
+        with SMBus(self.i2c_port) as bus:
+            try:
+                bus.write_i2c_block_data(self.i2c_addr, self.__DD_WHEEL_SEPARATION, msg)
+            except IOError:
+                print("set_wheel_separation(): IOError in i2c write.")
+        self.wheel_separation = wheel_separation
+
+    def set_pid_gains(self, motor, kp, ki, kd):
+        msg = [motor]
+        msg += [byte for data_item in [kp, ki, kd] for byte in struct.pack('<f', data_item)]
+        with SMBus(self.i2c_port) as bus:
+            try:
+                bus.write_i2c_block_data(self.i2c_addr, self.__DD_PID_GAINS, msg)
+            except IOError:
+                print("set_pid_gains(): IOError in i2c write.")
+
+    def set_encoder_cpr(self, enc, cpr):
+        msg = [enc]
+        msg += [byte for byte in struct.pack('<i', cpr)]
+        with SMBus(self.i2c_port) as bus:
+            try:
+                bus.write_i2c_block_data(self.i2c_addr, self.__ENC_CPR_REG, msg)
+            except IOError:
+                print("set_pid_gains(): IOError in i2c write.")
