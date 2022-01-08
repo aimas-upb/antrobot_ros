@@ -32,8 +32,8 @@ class AntRobotNode:
         # TODO: Add these as params on the server
         self.drive.set_wheel_radius(0.03)
         self.drive.set_wheel_separation(0.136)
-        self.drive.set_encoder_cpr(0, 1800)
-        self.drive.set_encoder_cpr(1, 1800)
+        self.drive.set_encoder_cpr(0, 1600)
+        self.drive.set_encoder_cpr(1, 1600)
         self.drive.cmd_vel(0, 0)
 
         # Subscribe to cmd_vel messages
