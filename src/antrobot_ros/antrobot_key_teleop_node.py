@@ -20,10 +20,10 @@ else:
 class KeyboardTeleoperation:
     def __init__(
             self, key_mapping: dict = None,
-            max_linear_velocity: float = 0.5,
+            max_linear_velocity: float = 0.45,
             max_angular_velocity: float = 6.0,
             linear_step_size: float = 0.05,
-            angular_step_size: float = 0.5
+            angular_step_size: float = 0.3
     ):
         self.key_mapping = key_mapping
         if key_mapping is None:
