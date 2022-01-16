@@ -8,8 +8,6 @@
     <node pkg="antrobot_ros" type="antrobot_node.py" name="antrobot"/>
 
     <!--  Enable antrobot lidar  -->
-    <include file="$(find rplidar_ros)/launch/rplidar.launch">
-        <arg name="lidar_enable" value="$(arg lidar_enable)"/>
-    </include>
+    <include file="$(find rplidar_ros)/launch/rplidar.launch" if="$(arg lidar_enable)"/>
 
 </launch>

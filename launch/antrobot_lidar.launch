@@ -1,5 +1,4 @@
 <launch>
-    <arg name="lidar_enable" default="true"/>
     <!--
       Antrobot uses the RPLiDAR A1/A2 by default. The package for RPLiDAR can be cloned
       form git clone https://github.com/robopeak/rplidar_ros.git.
@@ -7,5 +6,5 @@
       If the RPLidar is used uncomment include below.
       If another LiDAR is used, change the configuration accordingly.
     -->
-    <include if="$(arg lidar_enable)" file="$(find rplidar_ros)/launch/rplidar.launch" />
+    <include file="$(find rplidar_ros)/launch/rplidar.launch" if="$(arg enable)"/>
 </launch>
