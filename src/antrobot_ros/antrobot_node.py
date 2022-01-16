@@ -46,7 +46,7 @@ class AntRobotNode:
         #     rate.sleep()
         rospy.spin()
         self.drive.cmd_vel(0, 0)
-        self.drive.disable();
+        self.drive.disable()
 
 
 if __name__ == "__main__":
