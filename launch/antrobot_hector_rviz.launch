@@ -1,0 +1,4 @@
+ <launch>
+    <!-- TODO: use personalized rviz config -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find antrobot_ros)/config/rviz/rviz_hector_slam_config.rviz"/>
+ </launch>
