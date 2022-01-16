@@ -53,7 +53,7 @@
     <param name="tf_map_scanmatch_transform_frame_name" value="$(arg tf_map_scanmatch_transform_frame_name)" />
   </node>
 
-  <node pkg="tf" type="static_transform_publisher" name="odom_to_base_broadcaster" args="0 0 0 0 0 0 odom base_link 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_base_broadcaster" args="-0.045 0 0 0 0 0 odom base_link 100"/>
   <!--<node pkg="tf" type="static_transform_publisher" name="map_nav_broadcaster" args="0 0 0 0 0 0 map nav 100"/>-->
   <node pkg="tf" type="static_transform_publisher" name="base_to_laser_broadcaster" args="0 0 0 0 0 0 base_link laser 100"/>
 
