@@ -6,7 +6,7 @@ TODO:
 ## Ant Robot SOCs Setup
 The steps described in this section will guide through installing the os and tools for rpi4, 
 jetson nano A02/B01, realsense, rplidar with support for ROS noetic and pythorch.
-#### Installing ubuntu 20.04.
+#### Jetson Nano Installing Ubuntu 20.04.
 ##### A. Using prebuilt image for Jetson Nano v3 (B01)
 1. Get an SD card with 32GB (minimal)/64GB recommended.
 2. Download the [ubuntu 20.4 image](https://drive.google.com/file/d/1GyHptqenyuyNOPx8tE4ria6-G9Eehpmm/view?usp=sharing)
@@ -112,7 +112,7 @@ Open each file with `sudo` nano and remove the hash in front of the line to acti
 We shall install this version besides the already available version 9. 
 With a simple command, you can now switch between the two versions. 
 The gcc compiler is always accompanied by the corresponding g++ compiler. 
-20. The latter will also be installed.
+The latter will also be installed.
    ```bash
    # install gcc and g++ version 8
    sudo apt install gcc-8 g++-8
@@ -126,7 +126,7 @@ The gcc compiler is always accompanied by the corresponding g++ compiler.
    sudo update-alternatives --config gcc
    sudo update-alternatives --config g++
    ```
-21. You may run into problems upgrading Ubuntu 20.04 on your Jetson Nano after a while. 
+20. You may run into problems upgrading Ubuntu 20.04 on your Jetson Nano after a while. 
 The Software Updater cannot install all the packages listed. 
    ```bash
    sudo apt --fix-broken
@@ -134,9 +134,10 @@ The Software Updater cannot install all the packages listed.
    ```
 #### Pytorch Build and Install
 Unfortunately, to get pytorch to work with the jetson and particular version of python3 we have to build it from scratch.
-For python3.6 there are a couple of *.whl that are already generated an you can follow the steps [here](https://qengineering.eu/install-pytorch-on-jetson-nano.html)
+For python3.6 there are a couple of *.whl that are already generated and you can follow the steps [here](https://qengineering.eu/install-pytorch-on-jetson-nano.html)
 to install them. Whereas, the steps described here will generate our own wheel with support for torch 1.10 / cuda 10.2 versions. 
-Note, the whole procedure takes about 8 hours on an overclocked Jetson Nano.
+Note, the whole procedure takes about 8 - 10 hours on an overclocked Jetson Nano and about 6 hours when compling natively.
+To generate the wheel natively see [Jetson Nano Pytorch Build Docker](https://github.com/dnovischi/jetson-nano-pythorch).
 Most important, when **upgrading** modify the version number in the file `~/pytorch/version.txt` from 1.7.0 to 1.7.1, if you install version PyTorch 1.7.1;
 or similarly for other versions. It seems the developers forget to adjust this number on GitHub. 
 If you don't change the number, you end up with a torch-1.7.0a0-cp36-cp36m-linux_aarch64.whl wheel, suggesting you have the old version still on your machine.
@@ -191,14 +192,14 @@ This is not required on a fresh install.
    sudo apt install clang
    sudo apt install clang-8
    ```
-13. Update clang alternatives and confgigure clang-8:
+13. Update clang alternatives and configure clang-8:
    ```bash
    sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-8 100
    sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-8 100
    sudo update-alternatives --config clang # select clang 8
    ```
 14. Next, modify the PyTorch code you just downloaded from GitHub. 
-All alterations limits the maximum of CUDA threads available during runtime. 
+All alterations limit the maximum of CUDA threads available during runtime. 
 There are three places which need our attention.
     - Edit `~/pytorch/aten/src/ATen/cpu/vec/vec256/vec256_float_neon.h`, 
       add `#if defined(__clang__) ||(__GNUC__ > 8 || (__GNUC__ == 8 && __GNUC_MINOR__ > 3))` and `#endif`
@@ -269,6 +270,65 @@ There are three places which need our attention.
    python3 setup.py bdist_wheel
    ```
 
+16. Install the wheel:
+    ```bash
+    cd ./dist
+    sudo -H pip3 install torch-1.10.0a0+git36449ea-cp38-cp38-linux_aarch64.whl
+    ```
+17. Check the installation, e.g.:
+    ```python
+    $ python3
+    
+    Python 3.8.10 (default, Nov 26 2021, 20:14:08) 
+    [GCC 9.3.0] on linux
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import torch
+    >>> torch.__version__
+    '1.10.0a0+git36449ea'
+    >>> print(torch.rand(5,4))
+    tensor([[0.7016, 0.8775, 0.2243, 0.3520],
+            [0.0253, 0.2327, 0.4430, 0.7621],
+            [0.5847, 0.9329, 0.1710, 0.4259],
+            [0.0877, 0.0088, 0.9197, 0.6599],
+            [0.4864, 0.3551, 0.9600, 0.9442]])
+    >>> print(torch.hypot(torch.tensor([1.]),torch.tensor([1.0])))
+    tensor([1.4142])
+    ```
+18. Now we also need torchvision (other extension follow a similar process). 
+First clone the repository for the compatible pytorch version.
+    ```bash
+    git clone -b v0.11.1 https://github.com/pytorch/vision.git
+    cd vision    
+    ```
+19. Do the build and generate the distribution wheel:
+    ```bash
+    python3 setup.py build
+    python3 setup.py bdist_wheel 
+    ```
+20. Install torchvision: 
+    ```bash
+    cd dist/
+    sudo -H pip3 install torchvision-0.11.0a0+fa347eb-cp38-cp38-linux_aarch64.whl
+    ```
+21. Check that everything is ok:
+    ```python
+    $ python3
+    
+    Python 3.8.10 (default, Nov 26 2021, 20:14:08) 
+    [GCC 9.3.0] on linux
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import torchvision
+    >>> torchvision.__version__
+    '0.11.0a0+fa347eb
+    ```
+22. Clean up after the fact:
+    ```bash
+    # remove the dphys-swapfile now
+    $ sudo /etc/init.d/dphys-swapfile stop
+    $ sudo apt-get remove --purge dphys-swapfile
+    # just a tip to save some space
+    $ sudo rm -rf ~/pytorch
+    ```
 #### SSH Setup
 1. Install your ssh key on the nano:
 
@@ -278,7 +338,21 @@ There are three places which need our attention.
     ` ssh jetson@nano.local`
 
 #### Wi-Fi Setup/Troubleshooting
+TODO: Add wifi connect via nmcli and text for troubleshooting.
 
+```bash
+  sudo apt-get update
+  sudo apt-get install git linux-headers-generic build-essential dkms
+  git clone https://github.com/pvaret/rtl8192cu-fixes.git
+  sudo dkms add ./rtl8192cu-fixes
+  sudo dkms install 8192cu/1.11
+  sudo depmod -a
+  sudo cp ./rtl8192cu-fixes/blacklist-native-rtl8192.conf /etc/modprobe.d/
+  sudo echo options rtl8xxxu ht40_2g=1 dma_aggregation=1 | sudo tee /etc/modprobe.d/rtl8xxxu.conf
+  sudo iw dev wlan0 set power_save off
+  sudo reboot now
+  sudo nano /etc/gdm3/custom.conf # Set  AutomaticLoginEnable = true  AutomaticLogin = user // put your user name here e.g. jetson
+```
 #### Realsense Setup
 
 TODO: Remove below:
