@@ -1,5 +1,20 @@
-# Ant Robot v2 ROS Package
+# Ant-Robot-v2 ROS Package
+## Installation Instructions
+TODO:
+## Usage Instructions
+TODO:
+### Published topics
+TODO:
+### Subscribed topics
+TODO:
+### Launch file parameters
+TODO:
+### Services
+TODO:
+## License
+LGPLv2
 
+TODO: Move below to a separate README
 ## Ant Robot SOCs Setup
 The steps described in this section will guide through installing the os and tools for rpi4, 
 jetson nano A02/B01, realsense, rplidar with support for ROS noetic and pytorch.
@@ -403,6 +418,3 @@ Notes for building torch, torchvision and torchaudio
     && python3 setup.py bdist_wheel \
     && cd ..
 ```
-
-## License
-LGPLv2
