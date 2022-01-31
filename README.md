@@ -69,7 +69,7 @@ sudo apt autoremove
 `sudo apt install nano`
 
 7. Next, you need to enable distribution upgrades in the update manager by setting prompt=normal in the `/etc/update-manager/release-upgrades` file.
-As usual, close with <Ctrl>+<X>, <Y> and <Enter>.
+As usual, close with `<Ctrl> + <X>, <Y>` and `<Enter>`.
 
 `sudo nano /etc/update-manager/release-upgrades`
 
@@ -86,12 +86,14 @@ It will take several hours. Unfortunately, some input is required throughout the
 Check your screen now and then. Answer all questions with the suggested default value.
 
 `sudo do-release-upgrade`
-11. When the process finishes, do not reboot.
+11. When the process finishes, **do not reboot!**
 12. First, check that `WaylandEnable=false` is uncommented in the `/etc/gdm3/custom.conf` file.
 13. Uncomment `Driver "nividia"` in the `/etc/X11/xorg.conf` file.
-14. Finally, reset the upgrade manager to never (`Prompt=never`) and reboot.
+14. Finally, reset the upgrade manager to never (`Prompt=never`) and now reboot.
 
 ```bash
+sudo nano /etc/gdm3/custom.conf
+sudo nano /etc/X11/xorg.conf
 sudo nano /etc/update-manager/release-upgrades
 sudo reboot
 ```
