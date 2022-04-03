@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 
 <launch>
-<!-- TODO: Set appropriate map file location -->
   <arg name="geotiff_map_file_path" default="$(find antrobot_ros)/maps/"/>
 
   <!--  <param name="/use_sim_time" value="true"/>-->
@@ -12,6 +11,7 @@
   <include file="$(find hector_geotiff_launch)/launch/geotiff_mapper.launch">
     <arg name="trajectory_source_frame_name" value="scanmatcher_frame"/>
     <arg name="map_file_path" value="$(arg geotiff_map_file_path)"/>
+    <arg name="map_file_base_name" value="antrobot"/>
   </include>
 
 </launch>

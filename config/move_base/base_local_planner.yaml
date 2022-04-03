@@ -1,0 +1,17 @@
+TrajectoryPlannerROS:
+  max_vel_x: 0.5 # defines maximum linear velocity that will be set by trajectory planner in m/s
+  min_vel_x: 0.1 # defines minimum linear velocity that will be set by trajectory planner in m/s
+  max_vel_theta: 0.35 # defines maximum angular velocity that will be set by trajectory planner in rad/s
+  min_vel_theta: -0.35  # defines minimum angular velocity that will be set by trajectory planner in rad/s
+  min_in_place_vel_theta: 0.5 # defines minimum rotational velocity allowed for the base while performing in-place rotations in rad/s
+
+  acc_lim_theta: 0.5 # defines the angular acceleration limit of the robot in rad/s^2
+  acc_lim_x: 0.05 # defines the x acceleration limit of the robot in m/s^2
+  acc_lim_Y: 0.05 # defines the y acceleration limit of the robot in m/s^2
+
+  holonomic_robot: false # Determines whether velocity commands are generated for a holonomic or non-holonomic robot
+
+  meter_scoring: true # compute the trajectories candidates scores in meters
+
+  xy_goal_tolerance: 0.20 # defines the tolerance in meters for the controller in the x & y distance when achieving a goal
+  yaw_goal_tolerance: 0.25 # defines the tolerance in radians for the controller in yaw/rotation when achieving its goal
