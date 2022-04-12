@@ -32,15 +32,7 @@
     <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser_broadcaster" args="0 0 $(arg lidar_z) 0 0 0 base_link laser $(arg static_tf_update_rate)"/>
 
     <!--    TODO: Uncomment below when the nav module message is implemented in RDrive  -->
-<!--    <node pkg="tf" type="static_transform_publisher" name="odom_to_base" args="$(arg odom_x) 0 0 0 0 0 odom base_link $(arg static_tf_update_rate)"/>-->
+<!--    <node pkg="tf" type="static_transform_publisher" name="odom_to_base" args="$(arg odom_x) 0 0 0 0 0 odom base_footprint $(arg static_tf_update_rate)"/>-->
 
-    <node pkg="move_base" type="move_base" name="move_base" output="screen">
-        <param name="controller_frequency" value="10.0"/>
-        <rosparam file="$(find antrobot_ros)/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
-        <rosparam file="(find antrobot_ros)/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
-        <rosparam file="$(find antrobot_ros)/config/move_base/local_costmap_params.yaml" command="load" />
-        <rosparam file="$(find antrobot_ros)/config/move_base/global_costmap_params.yaml" command="load" />
-        <rosparam file="(find antrobot_ros)/config/move_base/trajectory_planner.yaml" command="load" />
-    </node>
 
 </launch>

@@ -7,11 +7,13 @@ Panels:
         - /Global Options1
         - /Status1
         - /Grid1
-        - /Map1
-        - /Path1
         - /Pose1
         - /TF1/Frames1
-        - /TF1/Frames1/base_link1
+        - /Global Plan1/Map1
+        - /Global Plan1/Path1
+        - /Local Plan1/Map1
+        - /Local Plan1/Path1
+        - /Local Plan1/Pose1
       Splitter Ratio: 0.5
     Tree Height: 719
   - Class: rviz/Selection
@@ -56,7 +58,7 @@ Visualization Manager:
         Z: 0
       Plane: XY
       Plane Cell Count: 20
-      Reference Frame: <Fixed Frame>
+      Reference Frame: map
       Value: true
     - Alpha: 0.699999988079071
       Class: rviz/Map
@@ -93,8 +95,8 @@ Visualization Manager:
       Unreliable: false
       Value: true
     - Alpha: 1
-      Axes Length: 0.5
-      Axes Radius: 0.05000000074505806
+      Axes Length: 0.15000000596046448
+      Axes Radius: 0.014999999664723873
       Class: rviz/Pose
       Color: 255; 25; 0
       Enabled: true
@@ -137,20 +139,10 @@ Visualization Manager:
       Use rainbow: true
       Value: true
     - Class: rviz/TF
-      Enabled: true
+      Enabled: false
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        base_link:
-          Value: false
-        laser:
-          Value: false
-        map:
-          Value: false
-        odom:
-          Value: false
-        scanmatcher_frame:
-          Value: false
       Marker Alpha: 1
       Marker Scale: 1
       Name: TF
@@ -158,15 +150,110 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        map:
-          odom:
-            base_link:
-              laser:
-                {}
-          scanmatcher_frame:
-            {}
+        {}
       Update Interval: 0
-      Value: true
+      Value: false
+    - Class: rviz/Group
+      Displays:
+        - Alpha: 0.800000011920929
+          Class: rviz/Map
+          Color Scheme: costmap
+          Draw Behind: true
+          Enabled: true
+          Name: Map
+          Topic: /move_base/global_costmap/costmap
+          Unreliable: false
+          Use Timestamp: false
+          Value: true
+        - Alpha: 1
+          Buffer Length: 10
+          Class: rviz/Path
+          Color: 239; 41; 41
+          Enabled: true
+          Head Diameter: 0.30000001192092896
+          Head Length: 0.20000000298023224
+          Length: 0.30000001192092896
+          Line Style: Lines
+          Line Width: 0.029999999329447746
+          Name: Path
+          Offset:
+            X: 0
+            Y: 0
+            Z: 0
+          Pose Color: 255; 85; 255
+          Pose Style: None
+          Queue Size: 10
+          Radius: 0.029999999329447746
+          Shaft Diameter: 0.10000000149011612
+          Shaft Length: 0.10000000149011612
+          Topic: /move_base/TrajectoryPlannerROS/global_plan
+          Unreliable: false
+          Value: true
+      Enabled: true
+      Name: Global Plan
+    - Class: rviz/Group
+      Displays:
+        - Alpha: 0.699999988079071
+          Class: rviz/Map
+          Color Scheme: costmap
+          Draw Behind: true
+          Enabled: true
+          Name: Map
+          Topic: /move_base/local_costmap/costmap
+          Unreliable: false
+          Use Timestamp: false
+          Value: true
+        - Alpha: 1
+          Buffer Length: 5
+          Class: rviz/Path
+          Color: 38; 171; 235
+          Enabled: true
+          Head Diameter: 0.30000001192092896
+          Head Length: 0.20000000298023224
+          Length: 0.30000001192092896
+          Line Style: Lines
+          Line Width: 0.029999999329447746
+          Name: Path
+          Offset:
+            X: 0
+            Y: 0
+            Z: 0
+          Pose Color: 255; 85; 255
+          Pose Style: None
+          Queue Size: 10
+          Radius: 0.029999999329447746
+          Shaft Diameter: 0.10000000149011612
+          Shaft Length: 0.10000000149011612
+          Topic: /move_base/TrajectoryPlannerROS/local_plan
+          Unreliable: false
+          Value: true
+        - Alpha: 1
+          Axes Length: 1
+          Axes Radius: 0.10000000149011612
+          Class: rviz/Pose
+          Color: 255; 25; 0
+          Enabled: true
+          Head Length: 0.10000000149011612
+          Head Radius: 0.07999999821186066
+          Name: Pose
+          Queue Size: 10
+          Shaft Length: 0.20000000298023224
+          Shaft Radius: 0.029999999329447746
+          Shape: Arrow
+          Topic: /move_base_simple/goal
+          Unreliable: false
+          Value: true
+        - Alpha: 1
+          Class: rviz/Polygon
+          Color: 245; 121; 0
+          Enabled: true
+          Name: Polygon
+          Queue Size: 10
+          Topic: /move_base/local_costmap/footprint
+          Unreliable: false
+          Value: true
+      Enabled: true
+      Name: Local Plan
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -195,7 +282,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rtabmap_ros/OrbitOriented
-      Distance: 13.102598190307617
+      Distance: 6.59164571762085
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -203,17 +290,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0.8581634759902954
-        Y: 1.8011759519577026
-        Z: -0.5288973450660706
+        X: 0.6110288500785828
+        Y: 0.1468936800956726
+        Z: -0.49760571122169495
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.9997968673706055
+      Pitch: 1.1097967624664307
       Target Frame: <Fixed Frame>
-      Yaw: 6.093604564666748
+      Yaw: 5.868600845336914
     Saved: ~
 Window Geometry:
   Displays:

@@ -13,5 +13,4 @@
     <arg name="map_file_path" value="$(arg geotiff_map_file_path)"/>
     <arg name="map_file_base_name" value="antrobot"/>
   </include>
-
 </launch>
