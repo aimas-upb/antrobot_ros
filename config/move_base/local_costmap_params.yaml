@@ -12,8 +12,8 @@ local_costmap:
   resolution: 0.1 # defines size of single map cell (in meters)
 
   inflation_layer:
-    inflation_radius: 0.2 # radius in meters to which the map inflates obstacle cost values
-    cost_scaling_factor: 6.0 # a scaling factor to apply to cost values during inflation (lower values increase the cost, default = 10)
+    inflation_radius: 0.20 # radius in meters to which the map inflates obstacle cost values
+    cost_scaling_factor: 10.0 # a scaling factor to apply to cost values during inflation (lower values increase the cost, default = 10)
 
   plugins:
     - {name: obstacle_layer, type: "costmap_2d::ObstacleLayer"}

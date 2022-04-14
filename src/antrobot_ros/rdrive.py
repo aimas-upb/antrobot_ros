@@ -15,8 +15,8 @@ class RDrive:
     __DD_VEL_CMD = 21
 
     def __init__(
-            self, pose=None, wheel_diameter=0.06, wheel_separation=0.1685,
-            has_encoder=True, encoder_resolution=1600,
+            self, pose=None, wheel_diameter=0.06, wheel_separation=0.1345,
+            has_encoder=True, encoder_resolution=2100,
             i2c_port=1, i2c_addr=0x70
     ):
         # Set 2D robot pose

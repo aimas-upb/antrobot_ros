@@ -31,9 +31,9 @@ class AntRobotNode:
             raise RuntimeError("RDrive enabled failed.")
         # TODO: Add these as params on the server
         self.drive.set_wheel_radius(0.03)
-        self.drive.set_wheel_separation(0.136)
-        self.drive.set_encoder_cpr(0, 1800)
-        self.drive.set_encoder_cpr(1, 1800)
+        self.drive.set_wheel_separation(0.1345)
+        self.drive.set_encoder_cpr(0, 2100)
+        self.drive.set_encoder_cpr(1, 2100)
         self.drive.cmd_vel(0, 0)
 
         # Subscribe to cmd_vel messages
