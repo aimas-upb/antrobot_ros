@@ -1,14 +1,14 @@
 global_costmap:
-  update_frequency: 10.0 # frequency in Hz for the map to be updated
-  publish_frequency: 10.0 # frequency in Hz for the map to be published display information
+  update_frequency: 5.0 # frequency in Hz for the map to be updated
+  publish_frequency: 5.0 # frequency in Hz for the map to be published display information
   transform_tolerance: 1.0 # define latency in published transforms (in seconds), if transforms are older than this, planner will stop
-  width: 12.0 # defines the width size of map (in meters)
-  height: 12.0 # defines the height size of map (in meters)
-  origin_x: -6.0  # defines the x coordinate of the map bottom left corner (in meters). Keeping this value at half of the width and rolling_window=true, will keep the robot in the center of the x-axis of the cost map.
-  origin_y: -6.0 # defines the y coordinate of the map bottom left corner (in meters). Keeping this value at half of the height and rolling_window=true, will keep the robot in the center of the y-axis of the cost map.
+  width: 32.0 # defines the width size of map (in meters)
+  height: 32.0 # defines the height size of map (in meters)
+  origin_x: -16.0  # defines the x coordinate of the map bottom left corner (in meters). Keeping this value at half of the width and rolling_window=true, will keep the robot in the center of the x-axis of the cost map.
+  origin_y: -16.0 # defines the y coordinate of the map bottom left corner (in meters). Keeping this value at half of the height and rolling_window=true, will keep the robot in the center of the y-axis of the cost map.
   rolling_window: true # keeps the robot in the center of the cost map as it moves throughout the world, dropping obstacle information from the map as the robot moves too far from a given area.
 #  inflation_radius: 5.0 # defines distance to obstacle where cost should be considered, any further from obstacle than this value will be treated as no cost
-  resolution: 0.1 # defines size of single map cell (in meters)
+  resolution: 0.2 # defines size of single map cell (in meters)
 
   inflation_layer:
     inflation_radius: 1.0 # radius in meters to which the map inflates obstacle cost values

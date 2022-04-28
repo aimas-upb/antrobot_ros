@@ -1,10 +1,11 @@
 #obstacle_range: 6.0 # the range at which obstacles will be updated in the cost map for planning
 #raytrace_range: 8.5 # the range at which area could be considered as free based on raytracing observations
-footprint: [[-0.08, -0.075], [-0.08, 0.075], [0.08, 0.075], [0.08, -0.075]] # coordinates of robot outline considered during collision detection
+#footprint: [[-0.08, -0.075], [-0.08, 0.075], [0.08, 0.075], [0.08, -0.075]] # coordinates of robot outline considered during collision detection
+robot_radius: 0.08
 map_topic: /map # topic on which the occupancy grid is published
 #subscribe_to_updates: true # periodically check if the map has been updated
 global_frame: map # coordinate frame coordinate frame tied to occupancy grid map (use odom for multiple maps)
-robot_base_frame: base_footprint # the robot base frame associated with is pose
+robot_base_frame: base_link # the robot base frame associated with is pose
 always_send_full_costmap: true # publish the full cost map every update
 
 static_layer:
@@ -22,5 +23,5 @@ obstacle_layer:
       clearing: true
       min_obstacle_height: 0.0
       max_obstacle_height: 5.0
-      obstacle_range: 6.0 # the range at which obstacles will be updated in the cost map for planning
-      raytrace_range: 8.5 # the range at which area could be considered as free based on raytracing observations
+      obstacle_range: 3.0 # the range at which obstacles will be updated in the cost map for planning
+      raytrace_range: 8.0 # the range at which area could be considered as free based on raytracing observations
