@@ -9,10 +9,10 @@ local_costmap:
   height: 4.0 # defines the height size of map (in meters)
   origin_x: -2.0 # defines the x coordinate of the map bottom left corner (in meters). Keeping this value at half of the width and rolling_window=true, will keep the robot in the center of the x-axis of the cost map.
   origin_y: -2.0 # defines the y coordinate of the map bottom left corner (in meters). Keeping this value at half of the height and rolling_window=true, will keep the robot in the center of the y-axis of the cost map.
-  resolution: 0.1 # defines size of single map cell (in meters)
+  resolution: 0.01 # defines size of single map cell (in meters)
 
   inflation_layer:
-    inflation_radius: 0.20 # radius in meters to which the map inflates obstacle cost values
+    inflation_radius: 0.3 # radius in meters to which the map inflates obstacle cost values
     cost_scaling_factor: 10.0 # a scaling factor to apply to cost values during inflation (lower values increase the cost, default = 10)
 
   plugins:
