@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 
 <launch>
+    <arg name="launch_antrobot" default="false"/>
     <arg name="lidar_enable" default="false"/>
 
-    <include file="$(find antrobot_ros)/launch/antrobot.launch">
+    <include file="$(find antrobot_ros)/launch/antrobot.launch" if="$(arg launch_antrobot)">
         <arg name="lidar_enable" value="$(arg lidar_enable)"/>
     </include>
     <node pkg="antrobot_ros" type="antrobot_key_teleop_node.py" name="antrobot_teleop" output="screen"/>
