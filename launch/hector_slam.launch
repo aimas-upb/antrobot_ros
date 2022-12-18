@@ -6,7 +6,7 @@
   <!--  <param name="/use_sim_time" value="true"/>-->
   <param name="/use_sim_time" value="false"/>
 
-  <include file="hector_mapping_config.launch"/>
+  <include file="$(find antrobot_ros)/launch/hector_mapping_config.launch"/>
 
   <include file="$(find hector_geotiff_launch)/launch/geotiff_mapper.launch">
     <arg name="trajectory_source_frame_name" value="scanmatcher_frame"/>
