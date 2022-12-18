@@ -1,12 +1,38 @@
+<?xml version="1.0"?>
+
 <launch>
     <!--  TODO: Add server parameters as they are implemented in antrobot_node.py  -->
+
+    <!--  Launcher global arguments  -->
+    <arg name="lidar_enable" default="false" /> <!-- Enable the inclusion of lidar node -->
+    <arg name="lidar_z" default="0.146"/> <!-- Lidar mounting height on the z axis measured from base_link -->
+    <arg name="base_link_z" default="0.035"/> <!-- Base link height on the z axis measured from base_footprint -->
+    <arg name="odom_x" default="-0.045 "/> <!-- Odomentry x axis base footprint offset relative to the differential drive -->
+    <arg name="static_tf_update_rate" default="10"/> <!-- Rate in ms at which static tf's are published -->
+
+
+    <!--  Antrobot robot node  -->
     <node pkg="antrobot_ros" type="antrobot_node.py" name="antrobot"/>
 
-    <!--  Antrobot uses the RPLiDAR A1/A2 by default. The package for RPLiDAR can be cloned
-          form git clone https://github.com/robopeak/rplidar_ros.git.
-          Note: the original rplidar at https://github.com/Slamtec/rplidar_ros contains errors.
-          If the RPLidar is used uncomment include below.
-          If another LiDAR is used, change the configuration accordingly.
+    <!--  Enable antrobot lidar  -->
+    <!-- Note:
+      - Antrobot uses the RPLiDAR A1/A2 by default. The package for RPLiDAR can be cloned
+        form git clone https://github.com/robopeak/rplidar_ros.git.
+      - The original rplidar at https://github.com/Slamtec/rplidar_ros contains errors.
+        If the RPLidar is used uncomment include below.
+        If another LiDAR is used, change the configuration accordingly.
+      - Use the lidar_enable argument to run this node with or without the lidar node
     -->
-<!--    <include file="$(find rplidar_ros)/launch/rplidar.launch" />-->
+    <include file="$(find rplidar_ros)/launch/rplidar.launch" if="$(arg lidar_enable)"/>
+
+    <!-- TODO: Enable realsense d455 or d35i -->
+
+    <!--  Static coordinate transformation  -->
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link_broadcaster" args="0 0 $(arg base_link_z) 0 0 0 base_footprint base_link $(arg static_tf_update_rate)" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser_broadcaster" args="0 0 $(arg lidar_z) 0 0 0 base_link laser $(arg static_tf_update_rate)"/>
+
+    <!--    TODO: Uncomment below when the nav module message is implemented in RDrive  -->
+<!--    <node pkg="tf" type="static_transform_publisher" name="odom_to_base" args="$(arg odom_x) 0 0 0 0 0 odom base_footprint $(arg static_tf_update_rate)"/>-->
+
+
 </launch>

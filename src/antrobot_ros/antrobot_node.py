@@ -17,7 +17,7 @@ class AntRobotNode:
     def __cmd_vel_callback__(self, msg: Twist) -> None:
         x = msg.linear.x
         rot = msg.angular.z
-        self.drive.move(x, rot)
+        self.drive.cmd_vel(x, rot)
 
     def run(self) -> None:
         # Initialize ant robot node
@@ -29,7 +29,12 @@ class AntRobotNode:
         if not ok:
             rospy.logerr("Failed to initialize rdrive!")
             raise RuntimeError("RDrive enabled failed.")
-        self.drive.move(0, 0)
+        # TODO: Add these as params on the server
+        self.drive.set_wheel_radius(0.03)
+        self.drive.set_wheel_separation(0.1345)
+        self.drive.set_encoder_cpr(0, 2100)
+        self.drive.set_encoder_cpr(1, 2100)
+        self.drive.cmd_vel(0, 0)
 
         # Subscribe to cmd_vel messages
         rospy.Subscriber(self.cmd_vel_topic, Twist, self.__cmd_vel_callback__)

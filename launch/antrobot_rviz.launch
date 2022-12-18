@@ -1,6 +1,0 @@
-<!-- Lauches the rviz rplidar configuration configuration for now.
-     TODO: Create antrobot rviz config as more visualization plugins are added.
--->
-<launch>
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find rplidar_ros)/rviz/rplidar.rviz" />
-</launch>

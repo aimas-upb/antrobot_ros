@@ -2,14 +2,14 @@
 
 <launch>
   <arg name="tf_map_scanmatch_transform_frame_name" default="scanmatcher_frame"/>
-<!--  <arg name="base_frame" default="base_footprint"/>-->
-  <arg name="base_frame" default="base_link"/>
-<!--  <arg name="odom_frame" default="nav"/>-->
-  <arg name="odom_frame" default="base_link"/>
+  <arg name="base_frame" default="base_footprint"/>
+  <arg name="odom_frame" default="base_footprint"/> <!--  Usage without an odom frame  -->
+<!--  <arg name="odom_frame" default="odom"/>--> <!--  TODO: This requires RDrive odom message to be available -->
   <arg name="pub_map_odom_transform" default="true"/>
   <arg name="scan_subscriber_queue_size" default="5"/>
   <arg name="scan_topic" default="scan"/>
   <arg name="map_size" default="2048"/>
+  <arg name="pub_odometry" default="true"/>
   
   <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
     
@@ -24,7 +24,7 @@
     <param name="pub_map_odom_transform" value="$(arg pub_map_odom_transform)"/>
     
     <!-- Map size / start point -->
-    <param name="map_resolution" value="0.050"/>
+    <param name="map_resolution" value="0.05"/>
     <param name="map_size" value="$(arg map_size)"/>
     <param name="map_start_x" value="0.5"/>
     <param name="map_start_y" value="0.5" />
@@ -37,13 +37,14 @@
     <param name="map_update_angle_thresh" value="0.06" />
     <param name="laser_z_min_value" value = "-1.0" />
     <param name="laser_z_max_value" value = "1.0" />
-    
+
     <!-- Advertising config --> 
     <param name="advertise_map_service" value="true"/>
-    
     <param name="scan_subscriber_queue_size" value="$(arg scan_subscriber_queue_size)"/>
     <param name="scan_topic" value="$(arg scan_topic)"/>
-    
+
+    <!-- Advertising config -->
+    <param name="pub_odometry" value="$(arg pub_odometry)"/>
     <!-- Debug parameters -->
     <!--
       <param name="output_timing" value="false"/>
@@ -52,9 +53,12 @@
     -->
     <param name="tf_map_scanmatch_transform_frame_name" value="$(arg tf_map_scanmatch_transform_frame_name)" />
   </node>
-    
-  <!--<node pkg="tf" type="static_transform_publisher" name="map_nav_broadcaster" args="0 0 0 0 0 0 map nav 100"/>-->
-  <node pkg="tf" type="static_transform_publisher" name="base_to_laser_broadcaster" args="0 0 0 0 0 0 base_link laser 100"/>
+
+  <!-- TF frames robot configuration -->
+  <!-- TODO: this needs to be moved to the robot -->
+<!--  <node pkg="tf" type="static_transform_publisher" name="odom_to_base_broadcaster" args="-0.045 0 0 0 0 0 odom base_link 100"/>-->
+  <node pkg="tf" type="static_transform_publisher" name="map_to_scanmatch" args="0 0 0 0 0 0 map $(arg tf_map_scanmatch_transform_frame_name) 10"/>
+
 </launch>
   
   

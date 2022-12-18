@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
+    <param name="controller_frequency" value="5.0"/>
+    <rosparam file="$(find antrobot_ros)/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find antrobot_ros)/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find antrobot_ros)/config/move_base/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find antrobot_ros)/config/move_base/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find antrobot_ros)/config/move_base/base_local_planner.yaml" command="load" />
+    <remap from="odom" to="scanmatch_odom" />
+  </node>
+</launch>
