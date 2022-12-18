@@ -8,7 +8,7 @@
     <arg name="lidar_z" default="0.146"/> <!-- Lidar mounting height on the z axis measured from base_link -->
     <arg name="base_link_z" default="0.035"/> <!-- Base link height on the z axis measured from base_footprint -->
     <arg name="odom_x" default="-0.045 "/> <!-- Odomentry x axis base footprint offset relative to the differential drive -->
-    <arg name="static_tf_update_rate" default="50"/> <!-- Rate in ms at which static tf's are published -->
+    <arg name="static_tf_update_rate" default="10"/> <!-- Rate in ms at which static tf's are published -->
 
 
     <!--  Antrobot robot node  -->
