@@ -1,6 +1,6 @@
 local_costmap:
-  update_frequency: 10.0 # frequency in Hz for the map to be updated
-  publish_frequency: 10.0 # frequency in Hz for the map to be published display information
+  update_frequency: 5.0 # frequency in Hz for the map to be updated
+  publish_frequency: 5.0 # frequency in Hz for the map to be published display information
   transform_tolerance: 1.0 # define latency in published transforms (in seconds), if transforms are older than this, planner will stop
 
   static_map: false # defines if map can change in time, true if map will not change
