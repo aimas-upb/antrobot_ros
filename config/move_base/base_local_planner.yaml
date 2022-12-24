@@ -1,11 +1,11 @@
 TrajectoryPlannerROS:
   max_vel_x: 0.30 # defines maximum linear velocity that will be set by trajectory planner in m/s
   min_vel_x: 0.12 # defines minimum linear velocity that will be set by trajectory planner in m/s
-  max_vel_theta: 3.5 # defines maximum angular velocity that will be set by trajectory planner in rad/s
-  min_vel_theta: -3.5  # defines minimum angular velocity that will be set by trajectory planner in rad/s
+  max_vel_theta: 1.5 # defines maximum angular velocity that will be set by trajectory planner in rad/s
+  min_vel_theta: -1.5  # defines minimum angular velocity that will be set by trajectory planner in rad/s
   min_in_place_vel_theta: 0.3 # defines minimum rotational velocity allowed for the base while performing in-place rotations in rad/s
 
-  acc_lim_theta: 0.5 # defines the angular acceleration limit of the robot in rad/s^2
+  acc_lim_theta: 0.15 # defines the angular acceleration limit of the robot in rad/s^2
   acc_lim_x: 0.05 #  the x acceleration limit of the robot in m/s^2
   acc_lim_Y: 0.0 # defines the y acceleration limit of the robot in m/s^2
   escape_vel: -0.1 # speed used for driving during escapes in meters/sec. Note that it must be negative in order for the robot to actually reverse.
