@@ -20,10 +20,14 @@ Notes:
 
 2. If the SD card is bigger than 32GB you can inflate the image use `gparted` to inflate it.
 If this doesn't work for simply use `parted` after booting the nano.  
+
 3. Do not install Chromium as it will interfere with the Snap installation. Use the preinstalled Morzilla Firefox.
+
 4. Do not install JTop! It disrupts your vulkan lavapipe which is always active during your Ubuntu sessions.
+
 5. Many CUDA related software needs gcc version 8. We have installed gcc and g++ version 8 alongside the preinstalled version 9.
 You can select your choice with `sudo update-alternatives --config gcc` and `sudo update-alternatives --config g++`
+
 6. You may encounter issues when upgrading (`sudo apt-get upgrade`) this Ubuntu 20.04 version. 
 It has to do with a conflicting /etc/systemd/sleep.conf file, which blocks the upgrade. 
 Follow the instructions [here](https://qengineering.eu/install-ubuntu-20.04-on-jetson-nano.html#upgrade) to correct the  issue.
@@ -31,6 +35,7 @@ If they don't work for you do the following:
    - `sudo apt --fix-missing update`
    - `sudo apt update`
    - `sudo apt install -f`
+   
 ### B. Installing Ubuntu 20.04 through distribution upgrade from 18.04
 1. Install the official ubuntu 18.04 image (see [here](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-2gb-devkit))
 2. Insert the sd card into the nano and boot
