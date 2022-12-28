@@ -54,13 +54,15 @@ sudo apt autoremove
 ```
 If durring the upgrade you encounter an error about the nvidia-l4t-bootlader do the following:
    
-   a. `sudo mv /var/lib/dpkg/info/ /var/lib/dpkg/backup/ #move /var/lib/info/`
-   b. `sudo mkdir /var/lib/dpkg/info/ #create new /var/lib/dpkg/info`
-   c. `sudo apt-get update #update the source list`
-   d. `sudo apt-get -f install #force install to correct the problem` 
-   e. `sudo mv /var/lib/dpkg/info/* /var/lib/dpkg/backup/ #Move the new structure dpkg/info to old info`
-   f. `sudo rm -rf /var/lib/dpkg/info #remove the new dpkg structure folder`
-   g. `sudo mv /var/lib/dpkg/backup/ /var/lib/dpkg/info/ #back the old`
+   ```bash 
+   sudo mv /var/lib/dpkg/info/ /var/lib/dpkg/backup/ #move /var/lib/info/`
+   sudo mkdir /var/lib/dpkg/info/ #create new /var/lib/dpkg/info
+   sudo apt-get update #update the source list
+   sudo apt-get -f install #force install to correct the problem
+   sudo mv /var/lib/dpkg/info/* /var/lib/dpkg/backup/ #Move the new structure dpkg/info to old info
+   sudo rm -rf /var/lib/dpkg/info #remove the new dpkg structure folder
+   sudo mv /var/lib/dpkg/backup/ /var/lib/dpkg/info/ #back the old
+   ```
    
 6. Install nano editor:.
 
