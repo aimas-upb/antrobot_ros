@@ -85,6 +85,8 @@ Visualization Manager:
       Value: true
     - Class: rviz/TF
       Enabled: false
+      Filter (blacklist): ""
+      Filter (whitelist): ""
       Frame Timeout: 15
       Frames:
         All Enabled: true
@@ -193,7 +195,7 @@ Visualization Manager:
           Topic: /move_base/TrajectoryPlannerROS/global_plan
           Unreliable: false
           Value: true
-      Enabled: false
+      Enabled: true
       Name: Global Planner
     - Class: rviz/Group
       Displays:
@@ -240,7 +242,7 @@ Visualization Manager:
           Topic: /move_base/local_costmap/footprint
           Unreliable: false
           Value: true
-      Enabled: false
+      Enabled: true
       Name: Local Planner
     - Class: rviz/Group
       Displays:
@@ -249,10 +251,10 @@ Visualization Manager:
           Marker Topic: /explore/frontiers
           Name: MarkerArray
           Namespaces:
-            {}
+            frontiers: true
           Queue Size: 100
           Value: true
-      Enabled: false
+      Enabled: true
       Name: Explore Lite
     - Class: rviz/Image
       Enabled: false
@@ -294,7 +296,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 8.796565055847168
+      Distance: 19.13618278503418
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -332,5 +334,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1848
-  X: 1992
+  X: 72
   Y: 27
