@@ -1,1 +1,1 @@
-# Ant Robot v2 ROS Package
+# Ant Robot ROS Package
