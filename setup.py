@@ -11,7 +11,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
+    install_requires=['setuptools', 'smbus2'],
     zip_safe=True,
     maintainer='Dan Novischi',
     maintainer_email='dan_marius.novischi@upb.ro',
