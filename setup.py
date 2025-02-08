@@ -1,3 +1,5 @@
+import os
+from glob import glob
 from setuptools import find_packages, setup
 
 package_name = 'antrobot_ros'
@@ -10,6 +12,11 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        # Install the config folder and its contents
+        ('share/' + package_name + '/config', ['config/antrobot_params.yaml']),
+        # Include all launch files.
+        (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
+        
     ],
     install_requires=['setuptools', 'smbus2'],
     zip_safe=True,
@@ -20,6 +27,14 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'rdrive_node = antrobot_ros.rdrive_node:main',
         ],
     },
+    
+    package_data={
+        package_name: ['config/antrobot_params.yaml'],
+    },
+    scripts=[
+        'antrobot_ros/rdrive_node.py',
+    ],
 )

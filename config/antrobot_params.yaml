@@ -1,0 +1,7 @@
+/**:
+  ros__parameters:
+    rdrive:
+      wheel_radius: 0.03
+      wheel_separation: 0.215
+      encoder_cpr_left: 2940
+      encoder_cpr_right: 2940

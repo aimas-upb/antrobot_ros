@@ -7,9 +7,13 @@
   <maintainer email="dan_marius.novischi@upb.ro">Dan Novischi</maintainer>
   <license>LGPL-3.0-only</license>
   
-  <exec_depend>python3-smbus2</exec_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <exec_depend>python3-smbus2</exec_depend>
   <exec_depend>rclpy</exec_depend> 
+  <exec_depend>ros2launch</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <!-- <exec_depend>rdrive</exec_depend>  -->
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

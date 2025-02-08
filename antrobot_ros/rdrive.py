@@ -6,7 +6,6 @@
 from smbus2 import SMBus
 import struct
 
-
 class RDrive:
     __ENC_CPR_REG = 13
     __DD_EN_DIS = 15
@@ -16,9 +15,8 @@ class RDrive:
     __DD_VEL_CMD = 21
 
     def __init__(
-            self, pose=None, wheel_diameter=0.06, wheel_separation=0.1345,
-            has_encoder=True, encoder_resolution=2100,
-            i2c_port=1, i2c_addr=0x70
+            self, pose=None, wheel_radius=0.03, wheel_separation=0.1345,
+            encoder_resolution=2100, i2c_port=1, i2c_addr=0x70
     ):
         # Set 2D robot pose
         if pose is None:
@@ -30,11 +28,10 @@ class RDrive:
         self.i2c_addr = i2c_addr
 
         # Set drive mechanical parameters
-        self.wheel_radius = wheel_diameter/2.0
+        self.wheel_radius = wheel_radius
         self.wheel_separation = wheel_separation
 
         # Set drive sensors parameters
-        self.has_encoder = has_encoder
         self.encoder_resolution = encoder_resolution
 
         # Set drive status
