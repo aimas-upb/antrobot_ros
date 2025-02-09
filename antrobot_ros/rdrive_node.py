@@ -97,6 +97,10 @@ class RDriveNode(Node):
             
             if not self.drive_state:
                 self.get_logger().info('RDrive shutdown.')
+    
+    def destroy_node(self):
+        self.drive_shutdown()
+        return super().destroy_node()
             
         
 def main(args=None):
@@ -117,9 +121,6 @@ def main(args=None):
     
     # Run rdrive node
     rclpy.spin(rdirve_node)
-    
-    # Shutdown rdrive
-    rdirve_node.drive_shutdown()
     
     # Don't wait for the garbage collector, free resources now!
     rdirve_node.destroy_node()
