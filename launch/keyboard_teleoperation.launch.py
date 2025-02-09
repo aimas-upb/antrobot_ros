@@ -27,9 +27,10 @@ def generate_launch_description():
             executable='keyboard_teleoperation_node',
             name='keyboard_teleoperation',
             namespace=LaunchConfiguration('namespace'),
-            output='screen',
-            # emulate_tty=True,  # Enable TTY emulation
             parameters=[config_file_path],
+            output='screen',
+            prefix='stdbuf -i0 -o0 -e0'
+            # emulate_tty=True,  # Enable TTY emulation 
             # prefix='xterm -e'
         )
     ])

@@ -60,7 +60,7 @@ class RDriveNode(Node):
 
     def __cmd_vel_callback(self, msg: Twist) -> None:
         v = msg.linear.x
-        omega = msg.linear.z
+        omega = msg.angular.z
         self.drive.cmd_vel(v, omega)
     
     def drive_init(self) -> None:

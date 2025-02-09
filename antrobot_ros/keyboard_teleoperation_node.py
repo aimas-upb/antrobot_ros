@@ -55,7 +55,7 @@ class KeyboardTeleoperation(Node):
         self.target_linear_velocity = self.get_parameter('target_linear_velocity').get_parameter_value().double_value
         self.target_angular_velocity = self.get_parameter('target_angular_velocity').get_parameter_value().double_value
 
-        self.pub_cmd_vel = self.create_publisher(Twist, 'cmd_vel', 10)
+        self.pub_cmd_vel = self.create_publisher(Twist, '/antrobot2/cmd_vel', 10)
 
         self.usage_msg = (
             "\n"
@@ -111,7 +111,6 @@ class KeyboardTeleoperation(Node):
         """Read a key press non-blockingly."""
         if os.name == 'nt':
             return msvcrt.getch().decode() if sys.version_info[0] >= 3 else msvcrt.getch()
-
         tty.setraw(sys.stdin.fileno())
         rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
         if rlist:
@@ -171,7 +170,7 @@ class KeyboardTeleoperation(Node):
         self.running = False
         self.key_thread.join()  # Wait for the key thread to finish
 
-        if os.name != 'nt':
+        if os.name != 'nt' and os.isatty(sys.stdin.fileno()):
             termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.settings)
 
         return super().destroy_node()
