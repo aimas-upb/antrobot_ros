@@ -37,6 +37,7 @@ class KeyboardTeleoperation(Node):
                 ('angular_step_size', 0.2),
                 ('target_linear_velocity', 0.0),
                 ('target_angular_velocity', 0.0),
+                ('timer_freq', 1.0),
             ]
         )
 
@@ -54,6 +55,7 @@ class KeyboardTeleoperation(Node):
         self.angular_step_size = self.get_parameter('angular_step_size').get_parameter_value().double_value
         self.target_linear_velocity = self.get_parameter('target_linear_velocity').get_parameter_value().double_value
         self.target_angular_velocity = self.get_parameter('target_angular_velocity').get_parameter_value().double_value
+        self.timer_freq = round(self.get_parameter('timer_freq').get_parameter_value().double_value, 2)
 
         self.namespace = self.get_namespace()
         if self.namespace == '/':
@@ -101,7 +103,7 @@ class KeyboardTeleoperation(Node):
         self.key_thread.start()
 
         # Timer for publishing velocities
-        self.create_timer(timer_period_sec=1.0, callback=self.__timer_callback)
+        self.create_timer(timer_period_sec=1.0 / self.timer_freq, callback=self.__timer_callback)  # Use timer frequency
 
     @staticmethod
     def __threshold__(target, low_limit, high_limit):
