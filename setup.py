@@ -14,6 +14,7 @@ setup(
         ('share/' + package_name, ['package.xml']),
         # Install the config folder and its contents
         ('share/' + package_name + '/config', ['config/antrobot_params.yaml']),
+        ('share/' + package_name + '/config', ['config/keyboard_teleoperation_params.yaml']),
         # Include all launch files.
         (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
         
@@ -28,13 +29,15 @@ setup(
     entry_points={
         'console_scripts': [
             'rdrive_node = antrobot_ros.rdrive_node:main',
+            'keyboard_teleoperation_node = antrobot_ros.keyboard_teleoperation_node:main'
         ],
     },
     
     package_data={
-        package_name: ['config/antrobot_params.yaml'],
+        package_name: ['config/antrobot_params.yaml','config/keyboard_teleoperation_params.yaml'],
     },
     scripts=[
         'antrobot_ros/rdrive_node.py',
+        'antrobot_ros/keyboard_teleoperation_node.py'
     ],
 )

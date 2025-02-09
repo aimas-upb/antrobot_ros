@@ -118,12 +118,14 @@ def main(args=None):
         rdirve_node.destroy_node()
         rclpy.shutdown()
         return
-    
-    # Run rdrive node
-    rclpy.spin(rdirve_node)
-    
-    # Don't wait for the garbage collector, free resources now!
-    rdirve_node.destroy_node()
+    try:
+        # Run rdrive node
+        rclpy.spin(rdirve_node)
+    except KeyboardInterrupt:
+        rdirve_node.get_logger().info('KeyboardInterrupt received, shutting down...')
+    finally:
+        # Don't wait for the garbage collector, free resources now!
+        rdirve_node.destroy_node()
     
     # Shutdown ros client lib
     rclpy.shutdown()

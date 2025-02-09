@@ -1,0 +1,10 @@
+keyboard_teleoperation_node:
+  ros__parameters:
+    linear_velocity: 0.5
+    angular_velocity: 1.0
+    key_mapping:
+      forward: 'w'
+      backward: 's'
+      left: 'a'
+      right: 'd'
+      stop: 'x'
