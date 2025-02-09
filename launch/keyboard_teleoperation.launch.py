@@ -12,6 +12,8 @@ def generate_launch_description():
         default_value='',
         description='Namespace for the keyboard teleoperation node'
     )
+    
+    print(namespace_arg)
 
     # Get the path to the configuration file
     config_file_path = os.path.join(
@@ -29,8 +31,7 @@ def generate_launch_description():
             namespace=LaunchConfiguration('namespace'),
             parameters=[config_file_path],
             output='screen',
-            prefix='stdbuf -i0 -o0 -e0'
-            # emulate_tty=True,  # Enable TTY emulation 
-            # prefix='xterm -e'
+            emulate_tty=True,
+            prefix='xterm -e'    
         )
     ])

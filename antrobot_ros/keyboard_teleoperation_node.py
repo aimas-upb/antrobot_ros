@@ -55,7 +55,17 @@ class KeyboardTeleoperation(Node):
         self.target_linear_velocity = self.get_parameter('target_linear_velocity').get_parameter_value().double_value
         self.target_angular_velocity = self.get_parameter('target_angular_velocity').get_parameter_value().double_value
 
-        self.pub_cmd_vel = self.create_publisher(Twist, '/antrobot2/cmd_vel', 10)
+        self.namespace = self.get_namespace()
+        if self.namespace == '/':
+            self.topic_cmd_vel_name = 'cmd_vel'
+        else:
+            self.topic_cmd_vel_name = f'{self.namespace}/cmd_vel'
+            
+        self.get_logger().debug('Namespace: %s' % self.namespace)
+        self.get_logger().debug('Cmd vel topic: %s' % self.topic_cmd_vel_name)
+        
+        
+        self.pub_cmd_vel = self.create_publisher(Twist, self.topic_cmd_vel_name, 10)
 
         self.usage_msg = (
             "\n"
