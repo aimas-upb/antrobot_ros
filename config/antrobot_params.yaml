@@ -8,3 +8,10 @@
       wheel_separation: 0.215
       encoder_cpr_left: 2940
       encoder_cpr_right: 2940
+    rplidar:
+      serial_port: "/dev/ttyUSB0"
+      serial_baudrate: 115200  # For A1, you can use 256000 for A2
+      frame_id: "laser"
+      inverted: false
+      angle_compensate: true
+      scan_mode: "Sensitivity"  # Options: "Standard", "Express", "Boost", "Sensitivity"

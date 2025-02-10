@@ -19,7 +19,7 @@ setup(
         (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
         
     ],
-    install_requires=['setuptools', 'smbus2'],
+    install_requires=['setuptools', 'smbus2', 'pyyaml'],
     zip_safe=True,
     maintainer='Dan Novischi',
     maintainer_email='dan_marius.novischi@upb.ro',
