@@ -7,22 +7,23 @@
     rdrive:
       wheel_radius: 0.03
       wheel_separation: 0.215
-      encoder_cpr_left: 2940
-      encoder_cpr_right: 2940
+      encoder_cpr_left: 2940 # change this to the encoder cpr of your left motor
+      encoder_cpr_right: 2940 # change this to the encoder cpr of your right motor
     rplidar:
-      serial_port: "/dev/ttyUSB0"
-      serial_baudrate: 115200  # For A1, you can use 256000 for A2
+      serial_port: "/dev/ttyUSB0" # change this to the correct port
+      serial_baudrate: 115200  # For A1, you can use both 115200 or 256000 for A2
       frame_id: "laser"
       inverted: false
       angle_compensate: true
       scan_mode: "Sensitivity"  # Options: "Standard", "Express", "Boost", "Sensitivity"
     tf_static:
       transforms:
-        - parent_frame: "base_footprint"
+        - parent_frame: "base_footprint" # base_footprint is the frame at ground level, at robot center
           child_frame: "base_link"
-          translation: [0.0, 0.0, 0.2]  # base_link (wheel_base) is 0.2m above base_footprint (at ground level)
+          translation: [0.0, 0.0, 0.3995]  # base_link (wheel_base) is 0.03995m above base_footprint (at ground level)
           rotation: [0.0, 0.0, 0.0]
         - parent_frame: "base_link"
           child_frame: "laser"
-          translation: [0.0, 0.0, 0.1]  # laser (Lidar link) is 0.1m above base_link (wheel_base)
+          translation: [0.0, 0.0, 0.1]  # laser (Lidar A1 link) is 0.19295m above base_link (wheel_base)
+          # translation: [0.0, 0.0, 0.1]  # laser (Lidar A2 link) is 0.1907m above base_link (wheel_base), when using 10mm spacer
           rotation: [0.0, 0.0, 0.0]  
