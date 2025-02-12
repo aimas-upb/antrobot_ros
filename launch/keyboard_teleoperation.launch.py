@@ -13,8 +13,6 @@ def generate_launch_description():
         description='Namespace for the keyboard teleoperation node'
     )
     
-    print(namespace_arg)
-
     # Get the path to the configuration file
     config_file_path = os.path.join(
         get_package_share_directory('antrobot_ros'),

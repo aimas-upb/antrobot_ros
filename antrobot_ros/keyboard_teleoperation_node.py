@@ -31,13 +31,13 @@ class KeyboardTeleoperation(Node):
                 ('key_mapping.left', ['a']),
                 ('key_mapping.right', ['d']),
                 ('key_mapping.stop', [' ']),
-                ('max_linear_velocity', 0.2),
-                ('max_angular_velocity', 1.0),
+                ('max_linear_velocity', 0.4),
+                ('max_angular_velocity', 1.57),
                 ('linear_step_size', 0.05),
                 ('angular_step_size', 0.2),
                 ('target_linear_velocity', 0.0),
                 ('target_angular_velocity', 0.0),
-                ('timer_freq', 1.0),
+                ('timer_freq', 0.5),
             ]
         )
 

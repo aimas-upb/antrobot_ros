@@ -3,12 +3,18 @@
 # GNU Lesser General Public License v3 or any later version.
 keyboard_teleoperation_node:
   ros__parameters:
-    linear_velocity: 0.5 # Maximum linear velocity m/s
-    angular_velocity: 1.0 # Maximum angular velocity rad/s
-    key_mapping: # Commands key mapping
-      forward: 'w'
-      backward: 's'
-      left: 'a'
-      right: 'd'
-      stop: 'x'
-    timer_freq: 20  # Timer frequency in Hz
+    key_mapping:
+      forward: ['w']
+      backward: ['s']
+      left: ['a']
+      right: ['d']
+      stop: [' ']
+    max_linear_velocity: 0.4
+    max_angular_velocity: 1.57
+    linear_step_size: 0.05
+    angular_step_size: 0.2
+    target_linear_velocity: 0.0
+    target_angular_velocity: 0.0
+    timer_freq: 0.5
+
+# keyboard_teleoperation:
