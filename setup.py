@@ -29,6 +29,8 @@ setup(
     entry_points={
         'console_scripts': [
             'rdrive_node = antrobot_ros.rdrive_node:main',
+            'rp_lidar_node = antrobot_ros.rp_lidar_node:main',
+            'tf_static_link_node = antrobot_ros.tf_static_link_node:main',
             'keyboard_teleoperation_node = antrobot_ros.keyboard_teleoperation_node:main'
         ],
     },
