@@ -17,32 +17,32 @@ class RDriveNode(Node):
                 
         # Declare parameters with default values (in case the antrobot_param.yaml is somehow missing)
         self.declare_parameter(
-            'rdrive.wheel_radius', 
+            'wheel_radius', 
             0.03, 
             ParameterDescriptor(description='Radius of the wheels')
         )
         self.declare_parameter(
-            'rdrive.wheel_separation', 
+            'wheel_separation', 
             0.215, 
             ParameterDescriptor(description='Separation between the wheels')
         )
         self.declare_parameter(
-            'rdrive.encoder_cpr_left', 
+            'encoder_cpr_left', 
             2940, 
             ParameterDescriptor(description='Encoder counts per revolution for the left wheel')
         )
         self.declare_parameter(
-            'rdrive.encoder_cpr_right', 
+            'encoder_cpr_right', 
             2940, 
             ParameterDescriptor(description='Encoder counts per revolution for the right wheel')
         )
         
         
         # Get the config rdrive parameters
-        self.wheel_radius = self.get_parameter('rdrive.wheel_radius').value
-        self.wheel_separation = self.get_parameter('rdrive.wheel_separation').value
-        self.encoder_cpr_left = self.get_parameter('rdrive.encoder_cpr_left').value
-        self.encoder_cpr_right = self.get_parameter('rdrive.encoder_cpr_right').value
+        self.wheel_radius = self.get_parameter('wheel_radius').value
+        self.wheel_separation = self.get_parameter('wheel_separation').value
+        self.encoder_cpr_left = self.get_parameter('encoder_cpr_left').value
+        self.encoder_cpr_right = self.get_parameter('encoder_cpr_right').value
         
         # Create the velocity command subscription
         self.cmd_vel_subscriber = self.create_subscription(

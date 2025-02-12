@@ -9,7 +9,7 @@ from launch.actions import DeclareLaunchArgument
 from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
-
+from antrobot_ros.utils import load_node_params
 
 
 def generate_launch_description():
@@ -33,13 +33,15 @@ def generate_launch_description():
         'antrobot_params.yaml'
     )
     
+    rdrive_parmas = load_node_params(config_file_path, 'rdrive')
+    
    # Create the rdrive node
     rdrive_node = Node(
         package='antrobot_ros',
         executable='rdrive_node.py',
         namespace=LaunchConfiguration('namespace'),
         name='rdrive_node',
-        parameters=[config_file_path]
+        parameters=[rdrive_parmas]
     )
     
     return LaunchDescription([robot_namespace_arg, rdrive_node ])

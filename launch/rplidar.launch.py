@@ -1,3 +1,6 @@
+# Copyright (C) 2025 Dan Novischi. All rights reserved.
+# This software may be modified and distributed under the terms of the
+# GNU Lesser General Public License v3 or any later version.
 import os
 from launch import LaunchDescription
 from launch_ros.actions import Node
@@ -22,15 +25,14 @@ def generate_launch_description():
     )
 
     rplidar_params = load_node_params(config_file_path, 'rplidar')
+    
+    rplidar_node = Node(
+        package='rplidar_ros',
+        executable='rplidar_node',
+        namespace=LaunchConfiguration('namespace'),
+        name='rplidar_node',
+        output='screen',
+        parameters=[rplidar_params],
+    )
 
-    return LaunchDescription([
-        robot_namespace_arg,
-        Node(
-            package='rplidar_ros',
-            executable='rplidar_node',
-            namespace=LaunchConfiguration('namespace'),
-            name='rplidar_node',
-            output='screen',
-            parameters=[rplidar_params],
-        ),
-    ])
+    return LaunchDescription([ robot_namespace_arg, rplidar_node ])
