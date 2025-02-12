@@ -24,6 +24,6 @@
           rotation: [0.0, 0.0, 0.0]
         - parent_frame: "base_link"
           child_frame: "laser"
-          translation: [0.0, 0.0, 0.1]  # laser (Lidar A1 link) is 0.19295m above base_link (wheel_base)
-          # translation: [0.0, 0.0, 0.1]  # laser (Lidar A2 link) is 0.1907m above base_link (wheel_base), when using 10mm spacer
+          translation: [0.0, 0.0, 0.19295]  # laser (Lidar A1 link) is 0.19295m above base_link (wheel_base)
+          # translation: [0.0, 0.0, 0.1907]  # laser (Lidar A2 link) is 0.1907m above base_link (wheel_base), when using 10mm spacer
           rotation: [0.0, 0.0, 0.0]  
