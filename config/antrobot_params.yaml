@@ -20,7 +20,7 @@
       transforms:
         - parent_frame: "base_footprint" # base_footprint is the frame at ground level, at robot center
           child_frame: "base_link"
-          translation: [0.0, 0.0, 0.3995]  # base_link (wheel_base) is 0.03995m above base_footprint (at ground level)
+          translation: [0.0, 0.0, 0.03995]  # base_link (wheel_base) is 0.03995m above base_footprint (at ground level)
           rotation: [0.0, 0.0, 0.0]
         - parent_frame: "base_link"
           child_frame: "laser_link"
