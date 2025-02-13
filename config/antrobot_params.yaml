@@ -12,7 +12,7 @@
     rplidar:
       serial_port: "/dev/ttyUSB0" # change this to the correct port
       serial_baudrate: 115200  # For A1, you can use both 115200 or 256000 for A2
-      frame_id: "laser"
+      frame_id: "laser_link"
       inverted: false
       angle_compensate: true
       scan_mode: "Sensitivity"  # Options: "Standard", "Express", "Boost", "Sensitivity"
@@ -23,7 +23,13 @@
           translation: [0.0, 0.0, 0.3995]  # base_link (wheel_base) is 0.03995m above base_footprint (at ground level)
           rotation: [0.0, 0.0, 0.0]
         - parent_frame: "base_link"
-          child_frame: "laser"
+          child_frame: "laser_link"
           translation: [0.0, 0.0, 0.19295]  # laser (Lidar A1 link) is 0.19295m above base_link (wheel_base)
           # translation: [0.0, 0.0, 0.1907]  # laser (Lidar A2 link) is 0.1907m above base_link (wheel_base), when using 10mm spacer
-          rotation: [0.0, 0.0, 0.0]  
+          rotation: [0.0, 0.0, 0.0]
+    pointcloud:
+      queue_size: 10
+      target_frame: "laser_link"
+      transform_tolerance: 0.01
+
+

@@ -17,6 +17,7 @@
   <depend>rplidar_ros</depend>
   <depend>sensor_msgs</depend>
   <depend>tf2_ros</depend>
+  <depend>pointcloud_to_laserscan</depend>
 
   <exec_depend>xterm</exec_depend>
 
