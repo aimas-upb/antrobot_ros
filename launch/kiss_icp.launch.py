@@ -8,8 +8,7 @@ from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
-from antrobot_ros.utils import load_node_params 
-
+from antrobot_ros.utils import load_node_params
 
 def generate_launch_description():
     robot_namespace_arg = DeclareLaunchArgument(
@@ -24,15 +23,22 @@ def generate_launch_description():
         'antrobot_params.yaml'
     )
 
-    rplidar_params = load_node_params(config_file_path, 'rplidar')
+    kiss_icp_params = load_node_params(config_file_path, 'kiss_icp')
     
-    rplidar_node = Node(
-        package='rplidar_ros',
-        executable='rplidar_node',
+    laserscan_to_pointcloud_params = load_node_params(config_file_path, 'laserscan_to_pointcloud')
+    
+    pointcloud_topic = laserscan_to_pointcloud_params['pointcloud_topic']
+    
+    kiss_icp_node = Node(
+        package='kiss_icp',
+        executable='kiss_icp_node',
         namespace=LaunchConfiguration('namespace'),
-        name='rplidar_node',
+        name='kiss_icp',
         output='screen',
-        parameters=[rplidar_params],
+        parameters=[kiss_icp_params],
+        remappings=[
+            ("pointcloud_topic", pointcloud_topic),
+        ],
     )
 
-    return LaunchDescription([ robot_namespace_arg, rplidar_node ])
+    return LaunchDescription([robot_namespace_arg, kiss_icp_node])

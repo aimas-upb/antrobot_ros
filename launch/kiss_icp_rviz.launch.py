@@ -2,14 +2,14 @@
 # This software may be modified and distributed under the terms of the
 # GNU Lesser General Public License v3 or any later version.
 
+# TODO: this is just a test luacher, it will be removed in the future
+
 import os
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
-from antrobot_ros.utils import load_node_params 
-
 
 def generate_launch_description():
     robot_namespace_arg = DeclareLaunchArgument(
@@ -18,21 +18,18 @@ def generate_launch_description():
         description='Namespace for the robot instance'
     )
 
-    config_file_path = os.path.join(
+    rviz_config_file = os.path.join(
         get_package_share_directory('antrobot_ros'),
         'config',
-        'antrobot_params.yaml'
+        'kiss_icp.rviz'
     )
 
-    rplidar_params = load_node_params(config_file_path, 'rplidar')
-    
-    rplidar_node = Node(
-        package='rplidar_ros',
-        executable='rplidar_node',
-        namespace=LaunchConfiguration('namespace'),
-        name='rplidar_node',
+    rviz_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
         output='screen',
-        parameters=[rplidar_params],
+        arguments=['-d', rviz_config_file],
     )
 
-    return LaunchDescription([ robot_namespace_arg, rplidar_node ])
+    return LaunchDescription([robot_namespace_arg, rviz_node])

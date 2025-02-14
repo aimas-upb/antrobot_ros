@@ -4,33 +4,64 @@
 
 /**:
   ros__parameters:
+    # RDrive is the Antrobot navigation module. The moudle implements the control system 
+    # for the differential drive in a closed loop fashion
     rdrive:
-      wheel_radius: 0.03
-      wheel_separation: 0.215
-      encoder_cpr_left: 2940 # change this to the encoder cpr of your left motor
-      encoder_cpr_right: 2940 # change this to the encoder cpr of your right motor
+      wheel_radius: 0.03  # Radius of the wheels in meters
+      wheel_separation: 0.215  # Distance between the wheels in meters
+      encoder_cpr_left: 2940  # Encoder counts per revolution for the left motor
+      encoder_cpr_right: 2940  # Encoder counts per revolution for the right motor
+
+    # RPLidar is the lidar used for Antrobot, which currently integrates A1 and A2
     rplidar:
-      serial_port: "/dev/ttyUSB0" # change this to the correct port
-      serial_baudrate: 115200  # For A1, you can use both 115200 or 256000 for A2
-      frame_id: "laser_link"
-      inverted: false
-      angle_compensate: true
-      scan_mode: "Sensitivity"  # Options: "Standard", "Express", "Boost", "Sensitivity"
+      serial_port: "/dev/ttyUSB0"  # Serial port for the RPLIDAR device
+      serial_baudrate: 115200  # Baud rate for the RPLIDAR serial communication
+      frame_id: "laser_link"  # Frame ID for the laser scan data
+      inverted: false  # Whether the laser scan data is inverted
+      angle_compensate: true  # Whether to use angle compensation for the laser scan
+      scan_mode: "Sensitivity"  # Scan mode for the RPLIDAR (Options: "Standard", "Express", "Boost", "Sensitivity")
+
+    # The static tf defines the structural frames for the components of the Antrobot as extracted from the mechanical design
     tf_static:
       transforms:
-        - parent_frame: "base_footprint" # base_footprint is the frame at ground level, at robot center
-          child_frame: "base_link"
+        - parent_frame: "base_footprint"  # base_footprint is the frame at ground level, at robot center
+          child_frame: "base_link" # base_link is the frame at the wheel base
           translation: [0.0, 0.0, 0.03995]  # base_link (wheel_base) is 0.03995m above base_footprint (at ground level)
-          rotation: [0.0, 0.0, 0.0]
-        - parent_frame: "base_link"
-          child_frame: "laser_link"
+          rotation: [0.0, 0.0, 0.0] # no rotation
+        - parent_frame: "base_link" # base_link is the frame at the wheel base
+          child_frame: "laser_link" # laser_link is the frame at the lidar
           translation: [0.0, 0.0, 0.19295]  # laser (Lidar A1 link) is 0.19295m above base_link (wheel_base)
           # translation: [0.0, 0.0, 0.1907]  # laser (Lidar A2 link) is 0.1907m above base_link (wheel_base), when using 10mm spacer
           rotation: [0.0, 0.0, 0.0]
+
+    # Laserscan to point cloud converts laserscans to pointclouds required for ICPs
     laserscan_to_pointcloud:
-      scan_topic: 'scan'
-      pointcloud_topic: 'scan_pointcloud'
-      include_point_timestamp: True
+      scan_topic: 'scan'  # Topic name for the laser scan data
+      pointcloud_topic: 'scan_pointcloud'  # Topic name for the point cloud data
+      include_point_timestamp: True  # Whether to include timestamps in the point cloud data
+
+    # For the SLAM front-end Antrobot currently integrates the KISS-ICP (https://www.ipb.uni-bonn.de/wp-content/papercite-data/pdf/vizzo2023ral.pdf)
+    # This publishes the robot odometry. Currently it only integrates lidar information. 
+    # Integration with wheel encoders and imu is pending.
+    kiss_icp:
+      base_frame: 'base_footprint'  # Base frame for the ICP algorithm
+      lidar_odom_frame: "odom_lidar"  # Frame ID for the lidar odometry
+      publish_odom_tf: true  # Whether to publish the odometry transform
+      invert_odom_tf: true  # Whether to invert the odometry transform
+      max_range: 8.0  # Maximum range for the lidar data in meters 
+      min_range: 0.15  # Minimum range for the lidar data in meters
+      deskew: true  # Whether or not to deskew the lidar data (set to true for moving robots) - requires timestamps for each point
+      max_points_per_voxel: 20  # Maximum number of points per voxel for the mapping (increase for higher resolution)
+      voxel_size: 0.1  # Size of the voxels for the mapping (decrease for finer resolution)
+      initial_threshold: 1.0  # Initial threshold for the adaptive threshold algorithm (adjust based on environment)
+      min_motion_th: 0.1  # Minimum motion threshold for the adaptive threshold algorithm (adjust based on robot speed)
+      max_num_iterations: 500  # Maximum number of iterations for the registration algorithm (increase for more accuracy)
+      convergence_criterion: 1e-4  # Convergence criterion for the registration algorithm (decrease for more precision)
+      max_num_threads: 0  # Maximum number of threads for the registration algorithm (set to 0 to use all available threads)
+      position_covariance: 0.1  # Fixed covariance for the position (adjust based on sensor accuracy)
+      orientation_covariance: 0.1  # Fixed covariance for the orientation (adjust based on sensor accuracy)
+      publish_debug_clouds: true  # Whether to publish debug point clouds (set to true for debugging)
+      use_sim_time: false  # Whether to use simulation time (set to true for simulations)
 
 
 
