@@ -36,9 +36,14 @@ def generate_launch_description():
             executable='static_transform_publisher',
             namespace=LaunchConfiguration('namespace'),
             arguments=[
-                str(transform['translation'][0]), str(transform['translation'][1]), str(transform['translation'][2]),
-                str(transform['rotation'][0]), str(transform['rotation'][1]), str(transform['rotation'][2]),
-                transform['parent_frame'], transform['child_frame']
+                '--x', str(transform['translation'][0]),
+                '--y', str(transform['translation'][1]),
+                '--z', str(transform['translation'][2]),
+                '--roll', str(transform['rotation'][0]),
+                '--pitch', str(transform['rotation'][1]),
+                '--yaw', str(transform['rotation'][2]),
+                '--frame-id', transform['parent_frame'],
+                '--child-frame-id', transform['child_frame']
             ],
             name=f"tf_static_publisher_{transform['parent_frame']}_{transform['child_frame']}",
             output='screen'

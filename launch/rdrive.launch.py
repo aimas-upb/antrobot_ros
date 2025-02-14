@@ -3,8 +3,6 @@
 # GNU Lesser General Public License v3 or any later version.
 
 import os
-# import re
-# import platform
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch_ros.actions import Node
@@ -14,14 +12,6 @@ from antrobot_ros.utils import load_node_params
 
 
 def generate_launch_description():
-    # TODO: Move the hostname extraction to the aggregate luaunch file
-    # # Extract the plaform hostname
-    # hostname = platform.node()
-    # # Obtain the robot base name (e.g. antrobot1, antrobot2, antrobot3...)
-    # match = re.search(r'-(antrobot\d+)', hostname)
-    # # If no match default to antrobot1
-    # namespace = match.group(1) if match else 'antrobot1'
-
     robot_namespace_arg = DeclareLaunchArgument(
         'namespace',
         default_value='',
