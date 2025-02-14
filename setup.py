@@ -28,15 +28,16 @@ setup(
     entry_points={
         'console_scripts': [
             'rdrive_node = antrobot_ros.rdrive_node:main',
-            'keyboard_teleoperation_node = antrobot_ros.keyboard_teleoperation_node:main'
+            'keyboard_teleoperation_node = antrobot_ros.keyboard_teleoperation_node:main',
+            'laserscan_to_pointcloud_node = antrobot_ros.laserscan_to_pointcloud_node:main'
         ],
     },
     
-    package_data={
-        package_name: ['config/antrobot_params.yaml','config/keyboard_teleoperation_params.yaml'],
-    },
-    scripts=[
-        'antrobot_ros/rdrive_node.py',
-        'antrobot_ros/keyboard_teleoperation_node.py'
-    ],
+    # package_data={
+    #     package_name: ['config/antrobot_params.yaml','config/keyboard_teleoperation_params.yaml'],
+    # },
+    # scripts=[
+    #     'antrobot_ros/rdrive_node.py',
+    #     'antrobot_ros/keyboard_teleoperation_node.py'
+    # ],
 )

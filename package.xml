@@ -13,12 +13,14 @@
   <depend>rclpy</depend> 
   <depend>launch</depend>  
   <depend>ros2launch</depend>
-  <depend>geometry_msgs</depend>
   <depend>rplidar_ros</depend>
-  <depend>sensor_msgs</depend>
   <depend>tf2_ros</depend>
-  <depend>pointcloud_to_laserscan</depend>
-
+  <depend>tf2_sensor_msgs</depend>
+  <depend>laser_geometry</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs_py</depend>
+  
   <exec_depend>xterm</exec_depend>
 
 

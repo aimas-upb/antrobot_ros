@@ -27,9 +27,11 @@
           translation: [0.0, 0.0, 0.19295]  # laser (Lidar A1 link) is 0.19295m above base_link (wheel_base)
           # translation: [0.0, 0.0, 0.1907]  # laser (Lidar A2 link) is 0.1907m above base_link (wheel_base), when using 10mm spacer
           rotation: [0.0, 0.0, 0.0]
-    pointcloud:
-      queue_size: 10
-      target_frame: "laser_link"
-      transform_tolerance: 0.01
+    laserscan_to_pointcloud:
+      scan_topic: 'scan'
+      pointcloud_topic: 'scan_pointcloud'
+      include_point_timestamp: True
+
+
 
 

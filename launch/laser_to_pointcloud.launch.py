@@ -26,21 +26,17 @@ def generate_launch_description():
     )
     
     # Load the parameters from the configuration file
-    params = load_node_params(config_file_path, 'pointcloud')    
+    params = load_node_params(config_file_path, 'laserscan_to_pointcloud')    
 
 
     return LaunchDescription([
         namespace_arg,
         Node(
-            package='pointcloud_to_laserscan',
+            package='antrobot_ros',
             executable='laserscan_to_pointcloud_node',
             name='laserscan_to_pointcloud',
             namespace=LaunchConfiguration('namespace'),
             output='screen',
-            parameters=[params],
-            remappings=[
-                ('scan_in', 'scan'),  # Input LaserScan topic
-                ('cloud', 'laser_cloud')  # Output PointCloud2 topic
-            ]
+            parameters=[params]
         )
     ])
