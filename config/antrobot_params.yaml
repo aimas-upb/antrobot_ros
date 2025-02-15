@@ -47,7 +47,7 @@
       base_frame: 'base_footprint'  # Base frame for the ICP algorithm
       lidar_odom_frame: "odom_lidar"  # Frame ID for the lidar odometry
       publish_odom_tf: true  # Whether to publish the odometry transform
-      invert_odom_tf: true  # Whether to invert the odometry transform
+      invert_odom_tf: false  # Whether to invert the odometry transform
       max_range: 3.5  # Maximum range for the lidar data in meters 
       min_range: 0.15  # Minimum range for the lidar data in meters
       deskew: true  # Whether or not to deskew the lidar data (set to true for moving robots) - requires timestamps for each point
@@ -60,7 +60,7 @@
       max_num_threads: 0  # Maximum number of threads for the registration algorithm (set to 0 to use all available threads)
       position_covariance: 0.1  # Fixed covariance for the position (adjust based on sensor accuracy)
       orientation_covariance: 0.1  # Fixed covariance for the orientation (adjust based on sensor accuracy)
-      publish_debug_clouds: true  # Whether to publish debug point clouds (set to true for debugging)
+      publish_debug_clouds: false  # Whether to publish debug point clouds (set to true for debugging)
       use_sim_time: false  # Whether to use simulation time (set to true for simulations)
 
 
