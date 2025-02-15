@@ -48,15 +48,15 @@
       lidar_odom_frame: "odom_lidar"  # Frame ID for the lidar odometry
       publish_odom_tf: true  # Whether to publish the odometry transform
       invert_odom_tf: true  # Whether to invert the odometry transform
-      max_range: 8.0  # Maximum range for the lidar data in meters 
+      max_range: 3.5  # Maximum range for the lidar data in meters 
       min_range: 0.15  # Minimum range for the lidar data in meters
       deskew: true  # Whether or not to deskew the lidar data (set to true for moving robots) - requires timestamps for each point
       max_points_per_voxel: 20  # Maximum number of points per voxel for the mapping (increase for higher resolution)
-      voxel_size: 0.1  # Size of the voxels for the mapping (decrease for finer resolution)
+      voxel_size: 0.02  # Size of the voxels for the mapping (decrease for finer resolution)
       initial_threshold: 1.0  # Initial threshold for the adaptive threshold algorithm (adjust based on environment)
       min_motion_th: 0.1  # Minimum motion threshold for the adaptive threshold algorithm (adjust based on robot speed)
       max_num_iterations: 500  # Maximum number of iterations for the registration algorithm (increase for more accuracy)
-      convergence_criterion: 1e-4  # Convergence criterion for the registration algorithm (decrease for more precision)
+      convergence_criterion: 1e-6  # Convergence criterion for the registration algorithm (decrease for more precision)
       max_num_threads: 0  # Maximum number of threads for the registration algorithm (set to 0 to use all available threads)
       position_covariance: 0.1  # Fixed covariance for the position (adjust based on sensor accuracy)
       orientation_covariance: 0.1  # Fixed covariance for the orientation (adjust based on sensor accuracy)
