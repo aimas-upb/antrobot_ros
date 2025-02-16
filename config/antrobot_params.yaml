@@ -69,7 +69,7 @@
     # (https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45466.pdf)
     cartographer:
       config_file: 'antrobot_cartographer_2d.lua' # Name of the Cartographer configuration file
-      resolution: 0.05  # Resolution of the occupancy grid in meters
+      resolution: 0.01  # Resolution of the occupancy grid in meters
       publish_period_sec: 1.0  # Publishing period for the occupancy grid node in seconds
 
 

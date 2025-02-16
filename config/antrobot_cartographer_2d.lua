@@ -50,8 +50,8 @@ TRAJECTORY_BUILDER_2D.use_imu_data = false  -- Whether or not to use IMU data
 TRAJECTORY_BUILDER_2D.use_online_correlative_scan_matching = true  -- Whether or not to use online correlative scan matching (yes aling the incomming lidar scans with the map)
 TRAJECTORY_BUILDER_2D.motion_filter.max_angle_radians = math.rad(0.1)  -- Maximum angle for the motion filter
 
-POSE_GRAPH.constraint_builder.min_score = 0.7  -- Minimum scan matching score for constraints (bellow constriants are ignored)  
-POSE_GRAPH.constraint_builder.global_localization_min_score = 0.7  -- Minimum score for global localization (bellow scores ignore scan matching for localization)
+POSE_GRAPH.constraint_builder.min_score = 0.8  -- Minimum scan matching score for constraints (bellow constriants are ignored)  
+POSE_GRAPH.constraint_builder.global_localization_min_score = 0.85  -- Minimum score for global localization (bellow scores ignore scan matching for localization)
 POSE_GRAPH.optimize_every_n_nodes = 10  -- Number of nodes after which to optimize the pose graph
 
 return options
