@@ -24,9 +24,9 @@ def generate_launch_description():
     )
 
     kiss_icp_params = load_node_params(config_file_path, 'kiss_icp')
+    odom_topic = kiss_icp_params['odom_topic']
     
     laserscan_to_pointcloud_params = load_node_params(config_file_path, 'laserscan_to_pointcloud')
-    
     pointcloud_topic = laserscan_to_pointcloud_params['pointcloud_topic']
     
     kiss_icp_node = Node(
@@ -38,6 +38,7 @@ def generate_launch_description():
         parameters=[kiss_icp_params],
         remappings=[
             ("pointcloud_topic", pointcloud_topic),
+            ('kiss/odometry', odom_topic),
         ],
     )
 
