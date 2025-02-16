@@ -40,7 +40,8 @@
       pointcloud_topic: 'scan_pointcloud'  # Topic name for the point cloud data
       include_point_timestamp: True  # Whether to include timestamps in the point cloud data
 
-    # For the SLAM front-end Antrobot currently integrates the KISS-ICP (https://www.ipb.uni-bonn.de/wp-content/papercite-data/pdf/vizzo2023ral.pdf)
+    # For the SLAM front-end Antrobot currently integrates the KISS-ICP 
+    # (https://www.ipb.uni-bonn.de/wp-content/papercite-data/pdf/vizzo2023ral.pdf)
     # This publishes the robot odometry. Currently it only integrates lidar information. 
     # Integration with wheel encoders and imu is pending.
     kiss_icp:
@@ -64,7 +65,8 @@
       publish_debug_clouds: false  # Whether to publish debug point clouds (set to true for debugging)
       use_sim_time: false  # Whether to use simulation time (set to true for simulations)
 
-    # Cartographer is another SLAM algorithm used for mapping and localization
+    # Cartographer is another SLAM algorithm used for mapping and localization 
+    # (https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45466.pdf)
     cartographer:
       config_file: 'antrobot_cartographer_2d.lua' # Name of the Cartographer configuration file
       resolution: 0.05  # Resolution of the occupancy grid in meters
