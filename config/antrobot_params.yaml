@@ -45,7 +45,7 @@
     # Integration with wheel encoders and imu is pending.
     kiss_icp:
       base_frame: 'base_footprint'  # Base frame for the ICP algorithm
-      lidar_odom_frame: "odom_lidar"  # Frame ID for the lidar odometry
+      lidar_odom_frame: "odom"  # Frame ID for the lidar odometry
       publish_odom_tf: true  # Whether to publish the odometry transform
       invert_odom_tf: false  # Whether to invert the odometry transform
       max_range: 3.5  # Maximum range for the lidar data in meters 
