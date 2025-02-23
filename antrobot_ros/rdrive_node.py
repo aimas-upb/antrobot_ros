@@ -4,11 +4,12 @@
 # GNU Lesser General Public License v3 or any later version.
 
 import rclpy
+from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSReliabilityPolicy, QoSDurabilityPolicy, QoSLivelinessPolicy
+from rclpy.duration import Duration
 from rclpy.node import Node
 from rcl_interfaces.msg import ParameterDescriptor
 from antrobot_ros.rdrive import RDrive
 from geometry_msgs.msg import Twist
-
 
 
 class RDriveNode(Node):
@@ -23,7 +24,7 @@ class RDriveNode(Node):
         )
         self.declare_parameter(
             'wheel_separation', 
-            0.215, 
+            0.219, 
             ParameterDescriptor(description='Separation between the wheels')
         )
         self.declare_parameter(
@@ -44,12 +45,24 @@ class RDriveNode(Node):
         self.encoder_cpr_left = self.get_parameter('encoder_cpr_left').value
         self.encoder_cpr_right = self.get_parameter('encoder_cpr_right').value
         
+        # Define a QoS profile for command velocity
+        cmd_vel_qos = QoSProfile(
+            history=QoSHistoryPolicy.KEEP_LAST,
+            depth=5,
+            reliability=QoSReliabilityPolicy.RELIABLE,
+            durability=QoSDurabilityPolicy.VOLATILE,
+            deadline=Duration(seconds=0),
+            lifespan=Duration(seconds=0),
+            liveliness=QoSLivelinessPolicy.AUTOMATIC,
+            liveliness_lease_duration=Duration(seconds=0)
+        )
+        
         # Create the velocity command subscription
         self.cmd_vel_subscriber = self.create_subscription(
             msg_type=Twist, 
             topic='cmd_vel',
             callback=self.__cmd_vel_callback, 
-            qos_profile=10
+            qos_profile=cmd_vel_qos
         )
         
         # Set node internal rdrive state

@@ -28,25 +28,27 @@ def generate_launch_description():
 
     # Extract transforms list
     transforms = tf_params.get('transforms', [])
-
-    tf_nodes = []
-    for transform in transforms:
-        tf_nodes.append(Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            namespace=LaunchConfiguration('namespace'),
-            arguments=[
-                '--x', str(transform['translation'][0]),
-                '--y', str(transform['translation'][1]),
-                '--z', str(transform['translation'][2]),
-                '--roll', str(transform['rotation'][0]),
-                '--pitch', str(transform['rotation'][1]),
-                '--yaw', str(transform['rotation'][2]),
-                '--frame-id', transform['parent_frame'],
-                '--child-frame-id', transform['child_frame']
-            ],
-            name=f"tf_static_publisher_{transform['parent_frame']}_{transform['child_frame']}",
-            output='screen'
-        ))
-
-    return LaunchDescription([robot_namespace_arg] + tf_nodes)
+    
+    publish_transforms = tf_params.get('publish_transforms', '')
+    if publish_transforms:
+        tf_nodes = []
+        for transform in transforms:
+            tf_nodes.append(Node(
+                package='tf2_ros',
+                executable='static_transform_publisher',
+                namespace=LaunchConfiguration('namespace'),
+                arguments=[
+                    '--x', str(transform['translation'][0]),
+                    '--y', str(transform['translation'][1]),
+                    '--z', str(transform['translation'][2]),
+                    '--roll', str(transform['rotation'][0]),
+                    '--pitch', str(transform['rotation'][1]),
+                    '--yaw', str(transform['rotation'][2]),
+                    '--frame-id', transform['parent_frame'],
+                    '--child-frame-id', transform['child_frame']
+                ],
+                name=f"tf_static_publisher_{transform['parent_frame']}_{transform['child_frame']}",
+                output='screen'
+            ))
+        return LaunchDescription([robot_namespace_arg] + tf_nodes)
+    return LaunchDescription([])

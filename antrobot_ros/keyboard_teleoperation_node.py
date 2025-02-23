@@ -11,6 +11,7 @@ import threading
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
+from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSReliabilityPolicy, QoSDurabilityPolicy, QoSLivelinessPolicy, Duration
 
 if os.name == 'nt':
     import msvcrt
@@ -66,8 +67,21 @@ class KeyboardTeleoperation(Node):
         self.get_logger().debug('Namespace: %s' % self.namespace)
         self.get_logger().debug('Cmd vel topic: %s' % self.topic_cmd_vel_name)
         
-        
-        self.pub_cmd_vel = self.create_publisher(Twist, self.topic_cmd_vel_name, 10)
+        # Define a QoS profile for teleoperation data:
+        cmd_vel_qos = QoSProfile(
+            history=QoSHistoryPolicy.KEEP_LAST,              # Only keep the most recent message.
+            depth=5,                                         # Depth of 5
+            reliability=QoSReliabilityPolicy.RELIABLE,       # Message allways get to subscribers.
+            durability=QoSDurabilityPolicy.VOLATILE,         # Data is transient; no need for storage.
+            deadline=Duration(seconds=0),                    # No deadline enforcement.
+            lifespan=Duration(seconds=0),                    # Messages do not expire.
+            liveliness=QoSLivelinessPolicy.AUTOMATIC,        # Default liveliness behavior.
+            liveliness_lease_duration=Duration(seconds=0)    # Liveliness lease duration not set.
+        )
+
+        self.pub_cmd_vel = self.create_publisher(
+            Twist, self.topic_cmd_vel_name, qos_profile=cmd_vel_qos
+        )
 
         self.usage_msg = (
             "\n"

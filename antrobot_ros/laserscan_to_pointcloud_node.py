@@ -10,6 +10,7 @@ from sensor_msgs.msg import LaserScan, PointCloud2, PointField
 import laser_geometry.laser_geometry as lg
 from sensor_msgs_py.point_cloud2 import create_cloud
 import tf2_ros
+from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSReliabilityPolicy, QoSDurabilityPolicy, QoSLivelinessPolicy, Duration
 
 class LaserToPointCloudNode(Node):
     def __init__(self):
@@ -32,12 +33,24 @@ class LaserToPointCloudNode(Node):
         self.tf_buffer = tf2_ros.Buffer()
         self.tf_listener = tf2_ros.TransformListener(self.tf_buffer, self)
 
+        # Define a QoS profile for LaserScan and PointCloud2 data:
+        qos_profile = QoSProfile(
+            history=QoSHistoryPolicy.KEEP_LAST,             # Only keep the most recent message.
+            depth=10,                                        # Depth of 10
+            reliability=QoSReliabilityPolicy.BEST_EFFORT,    # Occasional loss is acceptable.
+            durability=QoSDurabilityPolicy.VOLATILE,         # Data is transient; no need for storage.
+            deadline=Duration(seconds=0),                    # No deadline enforcement.
+            lifespan=Duration(seconds=0),                    # Messages do not expire.
+            liveliness=QoSLivelinessPolicy.AUTOMATIC,        # Default liveliness behavior.
+            liveliness_lease_duration=Duration(seconds=0)    # Liveliness lease duration not set.
+        )
+
         self.scan_sub = self.create_subscription(
-            LaserScan, scan_topic, self.scan_callback, 10
+            LaserScan, scan_topic, self.scan_callback, qos_profile
         )
         
         self.pc_pub = self.create_publisher(
-            PointCloud2, pointcloud_topic, 10
+            PointCloud2, pointcloud_topic, qos_profile
         )
 
         self.no_subscribers_logged = False

@@ -6,9 +6,12 @@
   ros__parameters:
     # RDrive is the Antrobot navigation module. The moudle implements the control system 
     # for the differential drive in a closed loop fashion
-    rdrive:
+    rdrive: # TODO: uddate this to antrobot and include options for urdf or all structural param and frames
+      description_package: antrobot_description
+      description_file: antrobot.urdf
+      use_description: false # Whether to use the URDF for the robot model
       wheel_radius: 0.03  # Radius of the wheels in meters
-      wheel_separation: 0.215  # Distance between the wheels in meters
+      wheel_separation: 0.219  # Distance between the wheels in meters
       encoder_cpr_left: 2940  # Encoder counts per revolution for the left motor
       encoder_cpr_right: 2940  # Encoder counts per revolution for the right motor
 
@@ -21,18 +24,25 @@
       angle_compensate: true  # Whether to use angle compensation for the laser scan
       scan_mode: "Sensitivity"  # Scan mode for the RPLIDAR (Options: "Standard", "Express", "Boost", "Sensitivity")
 
+    # The joint state estimator node is used to estimate the wheel joint states for the antrobot
+    joint_state_estimator:
+      odom_topic: 'odom'  # Topic name for the odometry data
+      joint_states_topic: 'joint_states'  # Topic name for the joint states
+      wheel_radius: 0.03  # Radius of the wheels in meters
+      wheel_separation: 0.219  # Distance between the wheels in meters
+
     # The static tf defines the structural frames for the components of the Antrobot as extracted from the mechanical design
     tf_static:
       transforms:
-        - parent_frame: "base_footprint"  # base_footprint is the frame at ground level, at robot center
-          child_frame: "base_link" # base_link is the frame at the wheel base
-          translation: [0.0, 0.0, 0.03995]  # base_link (wheel_base) is 0.03995m above base_footprint (at ground level)
+        - parent_frame: "base_link" # base_link is the frame at the wheel base  
+          child_frame: "base_footprint" # base_footprint is the frame at ground level, at robot center
+          translation: [0.0, 0.0, -0.035]  # base_link (wheel_base) is 0.035m above base_footprint (at ground level)
           rotation: [0.0, 0.0, 0.0] # no rotation
         - parent_frame: "base_link" # base_link is the frame at the wheel base
           child_frame: "laser_link" # laser_link is the frame at the lidar
-          translation: [0.0, 0.0, 0.19295]  # laser (Lidar A1 link) is 0.19295m above base_link (wheel_base)
-          # translation: [0.0, 0.0, 0.1907]  # laser (Lidar A2 link) is 0.1907m above base_link (wheel_base), when using 10mm spacer
+          translation: [0.0, 0.0, 0.155]  # laser (Lidar A2 link) is 0.155m above base_link (wheel_base), if using a aditional spacer adjust with its height
           rotation: [0.0, 0.0, 0.0]
+      publish_transforms: false  # Indicates if the static tf's should be published via static tf publishers
 
     # Laserscan to point cloud converts laserscans to pointclouds required for ICPs
     laserscan_to_pointcloud:
@@ -47,7 +57,7 @@
     kiss_icp:
       odom_topic: 'odom'  # Topic name for the odometry data
       base_frame: 'base_footprint'  # Base frame for the ICP algorithm
-      lidar_odom_frame: "odom"  # Frame ID for the lidar odometry
+      lidar_odom_frame: "odom"  # Frame ID for the lidar odometry # TODO: This should be set to the lidar actual link
       publish_odom_tf: true  # Whether to publish the odometry transform
       invert_odom_tf: false  # Whether to invert the odometry transform
       max_range: 3.5  # Maximum range for the lidar data in meters 
