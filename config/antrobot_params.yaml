@@ -16,7 +16,7 @@
     rplidar:
       serial_port: "/dev/ttyUSB0"  # Serial port for the RPLIDAR device
       serial_baudrate: 115200  # Baud rate for the RPLIDAR serial communication
-      frame_id: "laser_link"  # Frame ID for the laser scan data
+      frame_id: "rplidar_link"  # Frame ID for the laser scan data
       inverted: false  # Whether the laser scan data is inverted
       angle_compensate: true  # Whether to use angle compensation for the laser scan
       scan_mode: "Sensitivity"  # Scan mode for the RPLIDAR (Options: "Standard", "Express", "Boost", "Sensitivity")
@@ -64,7 +64,7 @@
     # Integration with wheel encoders and imu is pending.
     kiss_icp:
       odom_topic: 'odom'  # Topic name for the odometry data
-      base_frame: 'base_footprint'  # Base frame for the ICP algorithm
+      base_frame: 'base_link'  # Base frame for the ICP algorithm
       lidar_odom_frame: "odom"  # Frame ID for the lidar odometry # TODO: This should be set to the lidar actual link
       publish_odom_tf: true  # Whether to publish the odometry transform
       invert_odom_tf: false  # Whether to invert the odometry transform
