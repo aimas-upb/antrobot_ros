@@ -18,13 +18,13 @@ def generate_launch_description():
     namespace = match.group(1) if match else ''
     
     namespace_launch_arg = DeclareLaunchArgument('namespace', default_value=namespace, description='Namespace for the robot')
-    rdrive_launch_arg = DeclareLaunchArgument('launch_rdrive', default_value='true', description='Launch rdrive')
+    rdrive_launch_arg = DeclareLaunchArgument('launch_rdrive', default_value='false', description='Launch rdrive')
     rplidar_launch_arg = DeclareLaunchArgument('launch_rplidar', default_value='true', description='Launch rplidar')
-    tf_static_link_launch_arg = DeclareLaunchArgument('launch_tf_static_link', default_value='true', description='Launch tf_static_link') # TODO: this is only used for debug, set accordingly
+    tf_static_link_launch_arg = DeclareLaunchArgument('launch_tf_static_link', default_value='false', description='Launch tf_static_link') # TODO: this is only used for debug, set accordingly
     laserscan_to_pointcloud_launch_arg = DeclareLaunchArgument('launch_laserscan_to_pointcloud', default_value='true', description='Launch laserscan_to_pointcloud')
     kiss_icp_launch_arg = DeclareLaunchArgument('launch_kiss_icp', default_value='true', description='Launch kiss_icp')
     joint_state_launch_arg = DeclareLaunchArgument('launch_joint_state', default_value='true', description='Launch joint_state')
-    cartographer_launch_arg = DeclareLaunchArgument('launch_cartographer', default_value='true', description='Launch cartographer')
+    cartographer_launch_arg = DeclareLaunchArgument('launch_cartographer', default_value='false', description='Launch cartographer')
     
 
     # Include launch files conditionally

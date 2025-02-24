@@ -6,10 +6,7 @@
   ros__parameters:
     # RDrive is the Antrobot navigation module. The moudle implements the control system 
     # for the differential drive in a closed loop fashion
-    rdrive: # TODO: uddate this to antrobot and include options for urdf or all structural param and frames
-      description_package: antrobot_description
-      description_file: antrobot.urdf
-      use_description: false # Whether to use the URDF for the robot model
+    rdrive: # TODO: uddate this to antrobot and include options for urdf or all structural param and frames, this should be done only once
       wheel_radius: 0.03  # Radius of the wheels in meters
       wheel_separation: 0.219  # Distance between the wheels in meters
       encoder_cpr_left: 2940  # Encoder counts per revolution for the left motor
@@ -26,12 +23,23 @@
 
     # The joint state estimator node is used to estimate the wheel joint states for the antrobot
     joint_state_estimator:
-      odom_topic: 'odom'  # Topic name for the odometry data
-      joint_states_topic: 'joint_states'  # Topic name for the joint states
-      wheel_radius: 0.03  # Radius of the wheels in meters
-      wheel_separation: 0.219  # Distance between the wheels in meters
+      odom_topic: 'odom'  # Topic name for the odometry data to which the node subscribes
+      joint_states_topic: 'joint_states'  # Topic name for the joint states to which the node publishes 
+      wheel_radius: 0.03  # Radius of the wheels in meters # TODO: This should be done only once
+      wheel_separation: 0.219  # Distance between the wheels in meters # TODO: This should be done only once
+      publish_frequency: 20.0  # The maximum frequency at which the joint states will be published
+
+    # The robot state node is used to publish the robot state information
+    robot_state:
+      description_package: antrobot_description # Package name for the robot description # TODO: This should be part of the antrobot confi
+      description_file: antrobot.xacro  # URDF file for the robot model # TODO: This should be done only once
+      joint_states_topic: 'joint_states'  # Topic name for the joint states # TODO: This should be done only once
+      publish_frequency: 20.0  # The maximum frequency at which non-static transforms will be published to /tf
+      ignore_timestamp: false  # Whether to accept all joint states no matter what the timestamp
+      frame_prefix: ""  # An arbitrary prefix to add to the published tf2 frames (this is set based on the robot namespace dynamically)
 
     # The static tf defines the structural frames for the components of the Antrobot as extracted from the mechanical design
+    # This node is used only for debuging purposes, the robot_state_publisher is used to publish the the tf tree
     tf_static:
       transforms:
         - parent_frame: "base_link" # base_link is the frame at the wheel base  

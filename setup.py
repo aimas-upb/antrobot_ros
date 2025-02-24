@@ -31,7 +31,8 @@ setup(
         'console_scripts': [
             'rdrive_node = antrobot_ros.rdrive_node:main',
             'keyboard_teleoperation_node = antrobot_ros.keyboard_teleoperation_node:main',
-            'laserscan_to_pointcloud_node = antrobot_ros.laserscan_to_pointcloud_node:main'
+            'laserscan_to_pointcloud_node = antrobot_ros.laserscan_to_pointcloud_node:main',
+            'joint_state_estimator_node = antrobot_ros.joint_state_estimator_node:main'
         ],
     },
     
