@@ -10,7 +10,7 @@ from nav_msgs.msg import Odometry
 import math
 from rclpy.qos import QoSProfile, QoSHistoryPolicy, QoSReliabilityPolicy, QoSDurabilityPolicy, QoSLivelinessPolicy
 from rclpy.duration import Duration
-
+# TODO: Add intial pose service for this node
 class JointStateEstimator(Node):
     def __init__(self):
         super().__init__('joint_state_estimator')
@@ -32,18 +32,21 @@ class JointStateEstimator(Node):
         self.declare_parameter('joint_state_topic', 'joint_states')
         self.declare_parameter('wheel_radius', 0.03)
         self.declare_parameter('wheel_separation', 0.219)
+        self.declare_parameter('publish_frequency', 10.0)  # Default frequency is 10 Hz
 
         # Get parameters
         self.odom_topic = self.get_parameter('odom_topic').value
         self.joint_state_topic = self.get_parameter('joint_state_topic').value
         self.wheel_radius = self.get_parameter('wheel_radius').value
         self.wheel_separation = self.get_parameter('wheel_separation').value
-      
+        self.publish_frequency = self.get_parameter('publish_frequency').value
 
         # Initial joint state
         self.left_wheel_pos = 0.0
         self.right_wheel_pos = 0.0
-
+        self.left_wheel_vel = 0.0
+        self.right_wheel_vel = 0.0
+        
         # Subscriber to ICP-based odometry
         self.create_subscription(Odometry, self.odom_topic, self.odom_callback, joint_state_qos)
 
@@ -55,6 +58,14 @@ class JointStateEstimator(Node):
         self.last_x = 0.0
         self.last_y = 0.0
         self.last_theta = 0.0
+
+        # Timer to periodically publish joint states
+        self.timer_period = 1.0 / self.publish_frequency  # seconds
+        self.timer = self.create_timer(self.timer_period, self.timer_callback)
+
+    def timer_callback(self):
+        # Publish joint states periodically
+        self.publish_joint_states(self.left_wheel_pos, self.right_wheel_pos, self.left_wheel_vel, self.right_wheel_vel)
 
     def odom_callback(self, msg):
         # Get pose from KISS-ICP
@@ -78,11 +89,8 @@ class JointStateEstimator(Node):
             self.right_wheel_pos = (x / self.wheel_radius) + ((theta * self.wheel_separation) / (2 * self.wheel_radius))
 
             # Compute velocities
-            left_wheel_vel = (v / self.wheel_radius) - ((omega * self.wheel_separation) / (2 * self.wheel_radius))
-            right_wheel_vel = (v / self.wheel_radius) + ((omega * self.wheel_separation) / (2 * self.wheel_radius))
-
-            # Publish joint states
-            self.publish_joint_states(self.left_wheel_pos, self.right_wheel_pos, left_wheel_vel, right_wheel_vel)
+            self.left_wheel_vel = (v / self.wheel_radius) - ((omega * self.wheel_separation) / (2 * self.wheel_radius))
+            self.right_wheel_vel = (v / self.wheel_radius) + ((omega * self.wheel_separation) / (2 * self.wheel_radius))
 
         # Update last pose and time
         self.last_x = x
@@ -99,7 +107,7 @@ class JointStateEstimator(Node):
     def publish_joint_states(self, left_pos, right_pos, left_vel, right_vel):
         msg = JointState()
         msg.header.stamp = self.get_clock().now().to_msg()
-        msg.name = ['left_wheel_joint', 'right_wheel_joint']
+        msg.name = ['wheel_left_joint', 'wheel_right_joint'] # TODO: provide through urdf
         msg.position = [left_pos, right_pos]
         msg.velocity = [left_vel, right_vel]
         msg.effort = []
