@@ -1,5 +1,7 @@
 # Raspberry Pi Camera Module 3 on Ubuntu 24.04
 
+**Note: You use the already developed [RPI Camera v3 ROS Node](https://github.com/dnovischi/rpicamv3-ros) instead of these instructions.**
+
 Ubuntu 24.04 does not support the Raspberry Pi Camera Module 3 out of the box. The Ubuntu `libcamera` packages are the upstream version (no Raspberry Pi camera pipeline support), so you need to build and install Raspberry Pi's `libcamera` fork and `rpicam-apps` from source.
 
 ## Summary
